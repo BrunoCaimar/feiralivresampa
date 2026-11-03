@@ -8,3 +8,15 @@ dependencies = [
     "geopandas>=1.2.0",
     "requests>=2.34.2",
 ]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.17.3",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM", "RUF"]
