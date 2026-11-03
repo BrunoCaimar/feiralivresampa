@@ -156,19 +156,16 @@ map.on("load", async () => {
       "icon-allow-overlap": true,
       "icon-anchor": "bottom",
 
-      // --- NEW: Text Label Settings ---
-      //'text-field': ['get', 'tx_dia_funcionamento'], // Reads the day of the week
       "text-field": "{tx_dia_funcionamento} - {nm_equipamento}",
       "text-size": 12,
-      "text-offset": [0, 0.5], // Moves the text slightly down from the bottom of the pin
-      "text-anchor": "top", // Anchors the top of the text to the offset point
-      "text-optional": true, // Allows MapLibre to hide the text if the map gets too crowded, keeping the pin visible
+      "text-offset": [0, 0.5], 
+      "text-anchor": "top",
+      "text-optional": true,
     },
     paint: {
-      // --- NEW: Styling the text so it stands out ---
       "text-color": "#333333",
-      "text-halo-color": "#ffffff", // White outline
-      "text-halo-width": 2, // Thickness of the white outline
+      "text-halo-color": "#ffffff",
+      "text-halo-width": 2,
     },
   });
 
@@ -233,10 +230,6 @@ function setupInteractions() {
   }
 
   legendItems.forEach((item) => {
-    // if (item.getAttribute('data-day') !== todayString) {
-    //     item.classList.add('inactive');
-    // }
-
     item.addEventListener("click", () => {
       item.classList.toggle("inactive");
       updateMapFilter();
@@ -325,7 +318,6 @@ function setupInteractions() {
 
     console.log("User location:", userLocation);
     if (userLocation) {
-      //const googleMapsUrl = `http://googleusercontent.com/maps.google.com/${userLocation[1]},${userLocation[0]}&destination=${targetCoords[1]},${targetCoords[0]}&travelmode=walking`;
       const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${userLocation[1]},${userLocation[0]}&destination=${targetCoords[1]},${targetCoords[0]}&travelmode=walking`;
       gMapsLink.href = googleMapsUrl;
       gMapsLink.style.display = "inline-block";
