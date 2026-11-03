@@ -114,9 +114,33 @@ map.on("load", async () => {
         URL.revokeObjectURL(url);
         resolve(img);
       };
-      img.onerror = (err) => reject(err);
+      img.onerror = (error) => {
+        URL.revokeObjectURL(url);
+        reject(error);
+      };
       img.src = url;
     });
+  }
+
+  function createFallbackIcon(color) {
+    const canvas = document.createElement("canvas");
+    canvas.width = 20;
+    canvas.height = 20;
+
+    const context = canvas.getContext("2d");
+    if (!context) {
+      throw new Error("Não foi possível criar o contexto 2D do ícone.");
+    }
+
+    context.beginPath();
+    context.arc(10, 10, 8, 0, Math.PI * 2);
+    context.fillStyle = color;
+    context.fill();
+    context.strokeStyle = "#ffffff";
+    context.lineWidth = 2;
+    context.stroke();
+
+    return context.getImageData(0, 0, canvas.width, canvas.height);
   }
 
   function getTentSvgString(color = "#E63946") {
@@ -126,12 +150,26 @@ map.on("load", async () => {
   }
 
   for (const icon of icons) {
-    const svgStringWithColor = getTentSvgString(icon.color);
-    const img = await createSvgImage(svgStringWithColor, 20, 20);
+    try {
+      const svgStringWithColor = getTentSvgString(icon.color);
+      const img = await createSvgImage(svgStringWithColor, 20, 20);
 
-    console.log(`Created SVG image for ${icon.id} with color ${icon.color}`);
+      map.addImage(icon.id, img);
+    } catch (error) {
+      console.error(
+        `Falha ao criar o ícone ${icon.id}; usando marcador reserva.`,
+        error,
+      );
 
-    map.addImage(icon.id, img);
+      try {
+        map.addImage(icon.id, createFallbackIcon(icon.color));
+      } catch (fallbackError) {
+        console.error(
+          `Falha ao registrar o marcador reserva ${icon.id}.`,
+          fallbackError,
+        );
+      }
+    }
   }
 
   const feira_livre_source = map.addSource("feira-livre-data", {
