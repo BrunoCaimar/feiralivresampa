@@ -46,12 +46,12 @@ def obter_dados_feiras_livres():
     )
     logging.info(f"Payload: {payload}")
     response = requests.post(url_geosampa, headers={}, json=payload, timeout=30)
-    logging.info("HTTP Status Code: %d", response.status_code)
+    logging.info(f"HTTP Status Code: {response.status_code}")
     response.raise_for_status()
 
     json_data = response.json()
 
-    logging.info("Quantidade de feiras existentes: %d", len(json_data["features"]))
+    logging.info(f"Quantidade de feiras existentes: {len(json_data['features'])}")
 
     salvar_dados_feiras_livres(json_data)
     logging.info("Dados salvos com sucesso")
@@ -82,7 +82,7 @@ def salvar_dados_feiras_livres(json_data):
         if caminho_temporario is not None and os.path.exists(caminho_temporario):
             os.remove(caminho_temporario)
 
-    logging.info("Dados salvos em: %s", file_path)
+    logging.info(f"Dados salvos em: {file_path}")
 
 
 def copiar_dados_para_pasta_web():
@@ -108,7 +108,7 @@ def copiar_dados_para_pasta_web():
         if caminho_temporario is not None and os.path.exists(caminho_temporario):
             os.remove(caminho_temporario)
 
-    logging.info("Arquivo copiado para: %s", caminho_destino)
+    logging.info(f"Arquivo copiado para: {caminho_destino}")
 
 
 if __name__ == "__main__":
