@@ -347,12 +347,12 @@ function setupInteractions() {
     const visibility = map.getLayoutProperty("feira-livre-layer", "visibility");
     if (visibility === "visible") {
       map.setLayoutProperty("feira-livre-layer", "visibility", "none");
-      toggleBtn.textContent = "Turn Fair Layer On";
+      toggleBtn.textContent = "Habilitar Camada de Feiras Livres";
       toggleBtn.style.backgroundColor = "#555";
       legend.style.display = "none";
     } else {
       map.setLayoutProperty("feira-livre-layer", "visibility", "visible");
-      toggleBtn.textContent = "Turn Fair Layer Off";
+      toggleBtn.textContent = "Desabilitar Camada de Feiras Livres";
       toggleBtn.style.backgroundColor = "#1a73e8";
       legend.style.display = "block";
     }
