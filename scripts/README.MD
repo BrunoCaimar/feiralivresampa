@@ -33,6 +33,14 @@ source .venv/bin/activate
 uv run main.py
 ```
 
+## Verificando o código com Ruff
+
+Execute o verificador a partir desta pasta:
+
+```sh
+uv run ruff check .
+```
+
 ### Executando o script de de obtenção dos dados
 
 ```sh

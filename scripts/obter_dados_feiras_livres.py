@@ -1,10 +1,10 @@
-import os
-import shutil
-
-import requests
 import json
 import logging
+import os
+import shutil
 import sys
+
+import requests
 
 logging.basicConfig(
     level=logging.INFO,
@@ -52,10 +52,10 @@ def obter_dados_feiras_livres():
 
     salvar_dados_feiras_livres(json_data)
     logging.info("Dados salvos com sucesso")
-    
+
     copiar_dados_para_pasta_web()
     logging.info("Dados copiados para a pasta web com sucesso")
-    
+
     logging.info("-" * 80)
 
 
