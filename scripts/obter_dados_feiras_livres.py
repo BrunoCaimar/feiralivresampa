@@ -6,15 +6,18 @@ import sys
 
 import requests
 
+from config import (
+    nome_arquivo_saida,
+    output_srid_wgs84,
+    pasta_destino_saida,
+    url_geosampa,
+)
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[logging.StreamHandler(sys.stdout)],
 )
-
-url_geosampa = "https://novogeosampa.prefeitura.sp.gov.br/Download/DownloadGeoServer"
-nome_arquivo_saida = "equipamento_feira_livre.geojson"
-pasta_destino_saida = "data"
 
 
 def obter_dados_feiras_livres():
@@ -22,7 +25,6 @@ def obter_dados_feiras_livres():
         "https://geoserver.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/ows"
     )
     feira_livre_layer_id = 569
-    output_srid_wgs84 = "EPSG:4326"
 
     payload = {
         "url": f"{url_geoserver}?"

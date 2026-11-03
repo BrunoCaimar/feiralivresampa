@@ -2,8 +2,6 @@
 
 Essa pasta contém os scripts python utilizados pelo projeto.
 
-
-
 ## Instalando o ambiente de execução
 
 ### Pré-requisitos
@@ -50,4 +48,4 @@ uv run obter_dados_feiras_livres.py
 ## TO DO
 
 - Timestamp para marcar data de última execução
-- 
+- Github action para executar o script periodicamente
