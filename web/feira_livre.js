@@ -306,7 +306,9 @@ function setupInteractions() {
 
   legendItems.forEach((item) => {
     item.addEventListener("click", () => {
-      item.classList.toggle("inactive");
+      const isPressed = item.getAttribute("aria-pressed") === "true";
+      item.setAttribute("aria-pressed", String(!isPressed));
+      item.classList.toggle("inactive", isPressed);
       updateMapFilter();
     });
   });
@@ -317,9 +319,15 @@ function setupInteractions() {
     );
 
     if (allActive) {
-      legendItems.forEach((item) => item.classList.add("inactive"));
+      legendItems.forEach((item) => {
+        item.classList.add("inactive");
+        item.setAttribute("aria-pressed", "false");
+      });
     } else {
-      legendItems.forEach((item) => item.classList.remove("inactive"));
+      legendItems.forEach((item) => {
+        item.classList.remove("inactive");
+        item.setAttribute("aria-pressed", "true");
+      });
     }
     updateMapFilter();
   });
