@@ -7,7 +7,7 @@ gdf = gpd.read_file(input_file)
 print(f"Original CRS: {gdf.crs}")
 
 # 2. Define the source CRS if the file doesn't explicitly declare it
-# (Replace 31983 with the actual EPSG code of your source data. 
+# (Replace 31983 with the actual EPSG code of your source data.
 # 31983 is SIRGAS 2000 / UTM zone 23S, common in São Paulo).
 if gdf.crs is None:
     print("No CRS found in file. Setting source CRS manually...")
