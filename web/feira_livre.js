@@ -14,6 +14,19 @@ const map = new maplibregl.Map({
   attributionControl: false,
 });
 
+const dialog = document.getElementById("event-dialog");
+const dialogTitle = document.getElementById("dialog-title");
+const dialogDesc = document.getElementById("dialog-description");
+const closeBtn = document.getElementById("close-dialog");
+
+closeBtn.addEventListener("click", () => {
+  console.log("Closing dialog and clearing route line...");
+  dialog.close();
+  if (map.getSource("route-line")) {
+    map.getSource("route-line").setData({ type: "FeatureCollection", features: [] });
+  }
+});
+
 const scale = new maplibregl.ScaleControl({
   maxWidth: 80,
   unit: "metric",
@@ -185,19 +198,6 @@ function startGeolocation() {
 }
 
 function showModal(titulo, descricao) {
-  const dialog = document.getElementById("event-dialog");
-  const dialogTitle = document.getElementById("dialog-title");
-  const dialogDesc = document.getElementById("dialog-description");
-  const closeBtn = document.getElementById("close-dialog");
-
-  closeBtn.addEventListener("click", () => {
-    console.log("Closing dialog and clearing route line...");
-    dialog.close();
-    if (map.getSource("route-line")) {
-      map.getSource("route-line").setData({ type: "FeatureCollection", features: [] });
-    }
-  });
-
   dialogTitle.textContent = titulo;
   dialogDesc.innerHTML = descricao;
   dialog.showModal();
