@@ -1,10 +1,10 @@
 [project]
-name = "feira-sampa"
+name = "feira-livre-sampa"
 version = "0.1.0"
-description = "Add your description here"
+description = "Scripts do projeto feira livre sampa"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.14"
 dependencies = [
-    "geopandas>=1.1.3",
+    "geopandas>=1.2.0",
     "requests>=2.34.2",
 ]
