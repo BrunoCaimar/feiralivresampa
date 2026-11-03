@@ -1,4 +1,4 @@
-import * as maplibregl from "https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.mjs";
+import * as maplibregl from "https://unpkg.com/maplibre-gl@6.16.0/dist/maplibre-gl.mjs";
 
 const ORS_API_KEY =
   "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImNkZTljYTNjYWE2NjQxYzM5MjBmY2M2N2EwZWIyZjRlIiwiaCI6Im11cm11cjY0In0=";
@@ -290,6 +290,10 @@ function setupInteractions() {
       document.querySelectorAll(".legend-item:not(.inactive)"),
     );
     const checkedDays = activeItems.map((item) => item.getAttribute("data-day"));
+    selectAllBtn.textContent =
+      activeItems.length === legendItems.length
+        ? "Desmarcar todos"
+        : "Selecionar todos";
 
     if (checkedDays.length === 0) {
       map.setFilter("feira-livre-layer", ["==", "tx_dia_funcionamento", "NONE"]);
