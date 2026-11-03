@@ -44,7 +44,7 @@ def obter_dados_feiras_livres():
         f"Iniciando requisição para obter dados das feiras livres... {url_geosampa}"
     )
     logging.info(f"Payload: {payload}")
-    response = requests.post(url_geosampa, headers={}, json=payload)
+    response = requests.post(url_geosampa, headers={}, json=payload, timeout=30)
     logging.info("HTTP Status Code: %d", response.status_code)
     response.raise_for_status()
 
