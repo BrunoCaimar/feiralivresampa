@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>São Paulo - Onde tem feira livre?</title>
+
+    <link
+      href="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css"
+      rel="stylesheet"
+    />
+    <link href="styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="title">São Paulo - Onde tem feira livre?</div>
+    <div id="map"></div>
+
+    <div id="menu">
+      <button id="toggle-button">Turn Fair Layer Off</button>
+    </div>
+
+    <div id="legend">
+      <button id="legend-toggle" type="button" aria-label="Ocultar legenda">
+        X
+      </button>
+      <h4>Dia da semana&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+      <button id="legend-select-all">Alternar Todos</button>
+
+      <div class="legend-item" data-day="DOMINGO">
+        <span class="legend-color"></span>Domingo
+      </div>
+      <div class="legend-item" data-day="SEGUNDA-FEIRA">
+        <span class="legend-color"></span>Segunda-feira
+      </div>
+      <div class="legend-item" data-day="TERCA-FEIRA">
+        <span class="legend-color"></span>Terça-feira
+      </div>
+      <div class="legend-item" data-day="QUARTA-FEIRA">
+        <span class="legend-color"></span>Quarta-feira
+      </div>
+      <div class="legend-item" data-day="QUINTA-FEIRA">
+        <span class="legend-color"></span>Quinta-feira
+      </div>
+      <div class="legend-item" data-day="SEXTA-FEIRA">
+        <span class="legend-color"></span>Sexta-feira
+      </div>
+      <div class="legend-item" data-day="SABADO">
+        <span class="legend-color"></span>Sábado
+      </div>
+    </div>
+
+    <dialog id="event-dialog">
+      <h3 id="dialog-title">Feira Livre</h3>
+      <p id="dialog-description">Descricao Feira livre</p>
+      <button id="close-dialog">Fechar</button>
+    </dialog>
+
+    <script type="module" src="feira_livre.js"></script>
+  </body>
+</html>
