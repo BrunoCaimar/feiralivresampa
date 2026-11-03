@@ -51,7 +51,7 @@ def obter_dados_feiras_livres():
 
     json_data = response.json()
 
-    logging.info(f"Tamanho pacote recebido: {len(json_data)}")
+    logging.info("Quantidade de feiras existentes: %d", len(json_data["features"]))
 
     salvar_dados_feiras_livres(json_data)
     logging.info("Dados salvos com sucesso")
