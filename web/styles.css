@@ -7,7 +7,15 @@ html {
   font-family: sans-serif;
 }
 
+body {
+  display: flex;
+  height: 100vh;
+  height: 100dvh;
+  flex-direction: column;
+}
+
 #title {
+  flex: none;
   border: 10px solid black;
   text-align: center;
   background-color: lightgray;
@@ -20,9 +28,15 @@ html {
   font-weight: normal;
 }
 
+main {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
 #map {
   width: 100%;
-  height: 93vh;
+  height: 100%;
 }
 
 #menu {
