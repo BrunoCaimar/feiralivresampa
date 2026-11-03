@@ -329,7 +329,7 @@ function setupInteractions() {
               <strong>Trajeto a pé:</strong> <span id="distance-val">Calculando...</span><br><br>
               <a id="google-maps-link" target="_blank">Abrir rota no Google Maps ↗</a>
               <a id="share-link-feira" href="#" target="_blank" title="Compartilhar feira livre">
-              <img src="share.png" alt="Compartilhar feira livre" style="width: 20px; height: 20px; vertical-align: middle; margin-left: 35px;">
+              <img src="images/share.png" alt="Compartilhar feira livre" style="width: 20px; height: 20px; vertical-align: middle; margin-left: 35px;">
               </a>
           `;
 
