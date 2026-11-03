@@ -8,10 +8,12 @@ import tempfile
 import requests
 
 from config import (
+    feira_livre_layer_id,
     nome_arquivo_saida,
     output_srid_wgs84,
     pasta_destino_saida,
-    url_geosampa,
+    url_geosampa_download,
+    url_geosampa_geoserver,
 )
 
 logging.basicConfig(
@@ -22,13 +24,8 @@ logging.basicConfig(
 
 
 def obter_dados_feiras_livres():
-    url_geoserver = (
-        "https://geoserver.geosampa.prefeitura.sp.gov.br/geoserver/geoportal/ows"
-    )
-    feira_livre_layer_id = 569
-
     payload = {
-        "url": f"{url_geoserver}?"
+        "url": f"{url_geosampa_geoserver}?"
         + "service=WFS"
         + "&version=1.1.0"
         + "&request=GetFeature"
@@ -41,11 +38,11 @@ def obter_dados_feiras_livres():
     }
 
     logging.info("-" * 80)
-    logging.info(
-        f"Iniciando requisição para obter dados das feiras livres... {url_geosampa}"
-    )
+    logging.info(f"Requisitando os dados das feiras livres... {url_geosampa_download}")
     logging.info(f"Payload: {payload}")
-    response = requests.post(url_geosampa, headers={}, json=payload, timeout=30)
+    response = requests.post(
+        url_geosampa_download, headers={}, json=payload, timeout=30
+    )
     logging.info(f"HTTP Status Code: {response.status_code}")
     response.raise_for_status()
 
