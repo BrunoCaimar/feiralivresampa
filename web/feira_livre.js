@@ -367,7 +367,7 @@ function setupInteractions() {
     } else {
       distanceSpan.textContent = "Ative sua localização para calcular.";
       distanceSpan.style.color = "#555";
-      gMapsLink.href = `http://googleusercontent.com/maps.google.com/9{targetCoords[1]},${targetCoords[0]}`;
+      gMapsLink.href = `https://www.google.com/maps/dir/?api=1&destination=${targetCoords[1]},${targetCoords[0]}&travelmode=walking`;
       gMapsLink.style.display = "inline-block";
     }
   });
