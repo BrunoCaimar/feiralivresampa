@@ -68,7 +68,7 @@ html {
   user-select: none;
 }
 
-#legend h4 {
+#legend h2 {
   margin: 0 0 10px 0;
   font-size: 16px;
 }
@@ -196,10 +196,11 @@ dialog::backdrop {
   backdrop-filter: blur(2px);
 }
 
-dialog h3 {
+dialog h2 {
   margin-top: 0;
   margin-bottom: 10px;
   color: #333;
+  font-size: 1.17em;
 }
 
 dialog p {
