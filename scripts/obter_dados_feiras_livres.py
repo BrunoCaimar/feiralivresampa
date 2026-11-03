@@ -3,6 +3,7 @@ import logging
 import os
 import shutil
 import sys
+import tempfile
 
 import requests
 
@@ -64,12 +65,24 @@ def obter_dados_feiras_livres():
 def salvar_dados_feiras_livres(json_data):
     pasta_script = os.path.dirname(os.path.abspath(__file__))
     file_path = os.path.join(pasta_script, pasta_destino_saida, nome_arquivo_saida)
-    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    pasta_saida = os.path.dirname(file_path)
+    os.makedirs(pasta_saida, exist_ok=True)
 
-    with open(file_path, "w", encoding="utf-8") as f:
-        json.dump(json_data, f, ensure_ascii=False, indent=2)
+    caminho_temporario = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w", encoding="utf-8", dir=pasta_saida, delete=False
+        ) as arquivo_temporario:
+            caminho_temporario = arquivo_temporario.name
+            json.dump(json_data, arquivo_temporario, ensure_ascii=False, indent=2)
 
-        logging.info("Dados salvos em: %s", file_path)
+        os.replace(caminho_temporario, file_path)
+        caminho_temporario = None
+    finally:
+        if caminho_temporario is not None and os.path.exists(caminho_temporario):
+            os.remove(caminho_temporario)
+
+    logging.info("Dados salvos em: %s", file_path)
 
 
 def copiar_dados_para_pasta_web():
@@ -81,7 +94,19 @@ def copiar_dados_para_pasta_web():
     os.makedirs(pasta_web_data, exist_ok=True)
 
     caminho_destino = os.path.join(pasta_web_data, nome_arquivo_saida)
-    shutil.copy2(arquivo_saida, caminho_destino)
+    caminho_temporario = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            dir=pasta_web_data, delete=False
+        ) as arquivo_temporario:
+            caminho_temporario = arquivo_temporario.name
+
+        shutil.copy2(arquivo_saida, caminho_temporario)
+        os.replace(caminho_temporario, caminho_destino)
+        caminho_temporario = None
+    finally:
+        if caminho_temporario is not None and os.path.exists(caminho_temporario):
+            os.remove(caminho_temporario)
 
     logging.info("Arquivo copiado para: %s", caminho_destino)
 
