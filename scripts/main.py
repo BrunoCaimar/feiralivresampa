@@ -1,5 +1,5 @@
 def main():
-    print("Hello from feira-sampa!")
+    print("ambiente feira-livre-sampa pronto para uso!")
 
 
 if __name__ == "__main__":
