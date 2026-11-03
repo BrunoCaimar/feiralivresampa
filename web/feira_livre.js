@@ -197,9 +197,7 @@ function showModal(titulo, descricao) {
     console.log("Closing dialog and clearing route line...");
     dialog.close();
     if (map.getSource("route-line")) {
-      map
-        .getSource("route-line")
-        .setData({ type: "FeatureCollection", features: [] });
+      map.getSource("route-line").setData({ type: "FeatureCollection", features: [] });
     }
   });
 
@@ -219,16 +217,10 @@ function setupInteractions() {
     const activeItems = Array.from(
       document.querySelectorAll(".legend-item:not(.inactive)"),
     );
-    const checkedDays = activeItems.map((item) =>
-      item.getAttribute("data-day"),
-    );
+    const checkedDays = activeItems.map((item) => item.getAttribute("data-day"));
 
     if (checkedDays.length === 0) {
-      map.setFilter("feira-livre-layer", [
-        "==",
-        "tx_dia_funcionamento",
-        "NONE",
-      ]);
+      map.setFilter("feira-livre-layer", ["==", "tx_dia_funcionamento", "NONE"]);
     } else {
       map.setFilter("feira-livre-layer", [
         "match",
@@ -328,9 +320,7 @@ function setupInteractions() {
     const gMapsLink = document.getElementById("google-maps-link");
 
     if (map.getSource("route-line")) {
-      map
-        .getSource("route-line")
-        .setData({ type: "FeatureCollection", features: [] });
+      map.getSource("route-line").setData({ type: "FeatureCollection", features: [] });
     }
 
     console.log("User location:", userLocation);
@@ -412,10 +402,7 @@ function setupInteractions() {
     while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
       coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
     }
-    hoverPopup
-      .setLngLat(coordinates)
-      .setHTML(`<strong>${title}</strong>`)
-      .addTo(map);
+    hoverPopup.setLngLat(coordinates).setHTML(`<strong>${title}</strong>`).addTo(map);
   });
 
   map.on("mouseleave", "feira-livre-layer", () => {

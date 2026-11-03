@@ -1,11 +1,14 @@
 {
   "type": "module",
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "format": "prettier --write \"**/*.{js,html,css}\"",
+    "format:check": "prettier --check \"**/*.{js,html,css}\""
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "eslint": "^10.14.0",
-    "globals": "^17.14.0"
+    "globals": "^17.14.0",
+    "prettier": "^3.9.10"
   }
 }
