@@ -158,7 +158,7 @@ map.on("load", async () => {
 
       "text-field": "{tx_dia_funcionamento} - {nm_equipamento}",
       "text-size": 12,
-      "text-offset": [0, 0.5], 
+      "text-offset": [0, 0.5],
       "text-anchor": "top",
       "text-optional": true,
     },
