@@ -39,7 +39,36 @@ Execute o verificador a partir desta pasta:
 uv run ruff check .
 ```
 
-### Executando o script de de obtenção dos dados
+### Obtendo os dados das feiras livres
+
+O script `obter_dados_feiras_livres.py` obtém os dados das feiras livres
+disponibilizados pelo GeoSampa e solicita o resultado no formato GeoJSON, usando
+o sistema de coordenadas WGS84 (definido na configuração).
+
+Após receber a resposta, o script salva o arquivo `equipamento_feira_livre.geojson`
+na pasta `scripts/data` e copia uma versão para `web/data`, onde pode ser utilizada
+pela aplicação web.
+O timeout definido para obtenção dos dados é de 30 segundos e erros HTTP interrompem a execução.
+
+Os parâmetros do serviço, o nome do arquivo, a pasta de saída e o sistema de
+coordenadas estão definidos em `config.py`.
+
+### Configuração
+
+O arquivo `config.py` centraliza os valores usados pelo script de obtenção de
+dados:
+
+- `url_geosampa`: endereço do serviço GeoSampa que recebe a requisição.
+- `url_geoserver`: endereço do GeoServer de onde os dados das feiras são solicitados.
+- `feira_livre_layer_id`: identificador da camada de feiras livres no GeoSampa.
+- `nome_arquivo_saida`: nome do arquivo GeoJSON gerado.
+- `pasta_destino_saida`: pasta dentro de `scripts` onde o arquivo é salvo.
+- `output_srid_wgs84`: sistema de coordenadas solicitado para os dados.
+
+Altere esses valores nesse arquivo para atualizar os parâmetros sem modificar a
+lógica do script.
+
+Execute o script a partir da pasta `scripts`:
 
 ```sh
 uv run obter_dados_feiras_livres.py
