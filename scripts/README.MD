@@ -41,32 +41,24 @@ uv run ruff check .
 
 ### Obtendo os dados das feiras livres
 
-O script `obter_dados_feiras_livres.py` obtém os dados das feiras livres
-disponibilizados pelo GeoSampa e solicita o resultado no formato GeoJSON, usando
-o sistema de coordenadas WGS84 (definido na configuração).
+O script `obter_dados_feiras_livres.py` obtém os dados das feiras livres disponibilizados pela API do GeoSampa. Isso é feito através de uma requisição HTTP, solicitando apenas os dados de feiras livres no formato GeoJSON e no sistema de coordenadas WGS84.
 
-Após receber a resposta, o script salva o arquivo `equipamento_feira_livre.geojson`
-na pasta `scripts/data` e copia uma versão para `web/data`, onde pode ser utilizada
-pela aplicação web.
-O timeout definido para obtenção dos dados é de 30 segundos e erros HTTP interrompem a execução.
-
-Os parâmetros do serviço, o nome do arquivo, a pasta de saída e o sistema de
-coordenadas estão definidos em `config.py`.
+O timeout dessa requisição está definido em 30 segundos. Respostas HTTP com erro interrompem a execução. Os dados são salvos em um arquivo chamado `equipamento_feira_livre.geojson` na pasta `scripts/data`. Depois, esse mesmo arquivo é copiado para a pasta `web/data`, para uso pela aplicação web.
 
 ### Configuração
 
-O arquivo `config.py` centraliza os valores usados pelo script de obtenção de
-dados:
+O arquivo `config.py` centraliza os valores utilizados pelo script de obtenção dos dados:
 
-- `url_geosampa`: endereço do serviço GeoSampa que recebe a requisição.
-- `url_geoserver`: endereço do GeoServer de onde os dados das feiras são solicitados.
+- `url_geosampa_download`: endereço do serviço de download do GeoSampa, que
+  recebe a requisição HTTP.
+- `url_geosampa_geoserver`: endereço do GeoServer usado na solicitação WFS.
 - `feira_livre_layer_id`: identificador da camada de feiras livres no GeoSampa.
+- `output_srid_wgs84`: sistema de coordenadas solicitado; atualmente `EPSG:4326`
+  (WGS84).
 - `nome_arquivo_saida`: nome do arquivo GeoJSON gerado.
 - `pasta_destino_saida`: pasta dentro de `scripts` onde o arquivo é salvo.
-- `output_srid_wgs84`: sistema de coordenadas solicitado para os dados.
 
-Altere esses valores nesse arquivo para atualizar os parâmetros sem modificar a
-lógica do script.
+Os valores de configuração nesse arquivo para atualizar os parâmetros sem modificar a lógica do script.
 
 Execute o script a partir da pasta `scripts`:
 
