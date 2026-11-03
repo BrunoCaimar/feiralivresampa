@@ -1,4 +1,5 @@
 import os
+import shutil
 
 import requests
 import json
@@ -50,18 +51,37 @@ def obter_dados_feiras_livres():
     logging.info(f"Tamanho pacote recebido: {len(json_data)}")
 
     salvar_dados_feiras_livres(json_data)
-
     logging.info("Dados salvos com sucesso")
+    
+    copiar_dados_para_pasta_web()
+    logging.info("Dados copiados para a pasta web com sucesso")
+    
     logging.info("-" * 80)
 
 
 def salvar_dados_feiras_livres(json_data):
-    file_path = os.path.join(pasta_destino_saida, nome_arquivo_saida)
+    pasta_script = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(pasta_script, pasta_destino_saida, nome_arquivo_saida)
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
 
     with open(file_path, "w", encoding="utf-8") as f:
         json.dump(json_data, f, ensure_ascii=False, indent=2)
 
         logging.info("Dados salvos em: %s", file_path)
+
+
+def copiar_dados_para_pasta_web():
+    logging.info("Copiando arquivo para a pasta web/data...")
+
+    pasta_script = os.path.dirname(os.path.abspath(__file__))
+    arquivo_saida = os.path.join(pasta_script, pasta_destino_saida, nome_arquivo_saida)
+    pasta_web_data = os.path.join(pasta_script, "..", "web", "data")
+    os.makedirs(pasta_web_data, exist_ok=True)
+
+    caminho_destino = os.path.join(pasta_web_data, nome_arquivo_saida)
+    shutil.copy2(arquivo_saida, caminho_destino)
+
+    logging.info("Arquivo copiado para: %s", caminho_destino)
 
 
 if __name__ == "__main__":
