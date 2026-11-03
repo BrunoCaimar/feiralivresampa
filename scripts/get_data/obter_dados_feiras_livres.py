@@ -32,9 +32,11 @@ def obter_dados_feiras_livres():
         "layerId": feira_livre_layer_id,
         "format": "geojson",
     }
-    
-    logging.info("-"*80)
-    logging.info(f"Iniciando requisição para obter dados das feiras livres... {url_geosampa}")
+
+    logging.info("-" * 80)
+    logging.info(
+        f"Iniciando requisição para obter dados das feiras livres... {url_geosampa}"
+    )
     logging.info(f"Payload: {payload}")
     response = requests.post(url_geosampa, headers={}, json=payload)  # type: ignore
     logging.info("HTTP Status Code: %d", response.status_code)
@@ -47,7 +49,7 @@ def obter_dados_feiras_livres():
     salvar_dados_feiras_livres(json_data)
 
     logging.info("Dados salvos com sucesso")
-    logging.info("-"*80)
+    logging.info("-" * 80)
 
 
 def salvar_dados_feiras_livres(json_data):  # type: ignore
