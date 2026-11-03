@@ -48,3 +48,10 @@ Confira a formatação sem modificar os arquivos:
 ```sh
 npm run format:check
 ```
+
+## TO DO
+
+- Botão compartilhar
+- PWA
+- Fork me on Github
+- About
