@@ -203,6 +203,43 @@ function showModal(titulo, descricao) {
   dialog.showModal();
 }
 
+function obterFeatureSelecionada(item) {
+  const feature = item.features?.[0];
+  const coordinates = feature?.geometry?.coordinates;
+
+  if (
+    !feature ||
+    !Array.isArray(coordinates) ||
+    coordinates.length < 2 ||
+    !Number.isFinite(coordinates[0]) ||
+    !Number.isFinite(coordinates[1])
+  ) {
+    return null;
+  }
+
+  return feature;
+}
+
+function obterValorPropriedade(properties, propertyName, fallback) {
+  const value = properties[propertyName];
+  return value === undefined || value === null || value === ""
+    ? fallback
+    : String(value);
+}
+
+function escaparHtml(value) {
+  return String(value).replace(/[&<>"']/g, (character) => {
+    const entities = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+    };
+    return entities[character];
+  });
+}
+
 function setupInteractions() {
   const toggleBtn = document.getElementById("toggle-button");
   const legend = document.getElementById("legend");
@@ -277,7 +314,7 @@ function setupInteractions() {
 
   function obter_horario_funcionamento(properties) {
     const categoria = properties.cd_tipo_categoria;
-    if (!categoria || categoria.trim() === "") return null;
+    if (typeof categoria !== "string" || categoria.trim() === "") return null;
 
     if (categoria === "T") {
       return "Tradicional - 8h às 14h ☀";
@@ -290,16 +327,29 @@ function setupInteractions() {
   }
 
   map.on("click", "feira-livre-layer", async (e) => {
-    const properties = e.features[0].properties;
-    const targetCoords = e.features[0].geometry.coordinates.slice();
+    const feature = obterFeatureSelecionada(e);
+    if (!feature) {
+      console.warn("Não foi possível obter os dados da feira selecionada.");
+      showModal(
+        "Dados indisponíveis",
+        "Não foi possível carregar os dados desta feira.",
+      );
+      return;
+    }
 
-    const titulo = properties.nm_equipamento || "Street Fair";
+    const properties =
+      feature.properties && typeof feature.properties === "object"
+        ? feature.properties
+        : {};
+    const targetCoords = feature.geometry.coordinates.slice();
+
+    const titulo = obterValorPropriedade(properties, "nm_equipamento", "Feira livre");
 
     const descricao = `
-              <strong>Dia da semana:</strong> ${properties.tx_dia_funcionamento || "N/A"}<br>
-              <strong>Horário:</strong> ${obter_horario_funcionamento(properties) || "N/A"}<br>
-              <strong>Endereço:</strong> ${properties.tx_endereco_equipamento || "Sem endereço."}<br>
-              <strong>Quantidade de barracas:</strong> ${properties.qt_equipamento || "Sem quantidade."}<br><br>
+              <strong>Dia da semana:</strong> ${escaparHtml(obterValorPropriedade(properties, "tx_dia_funcionamento", "Não informado"))}<br>
+              <strong>Horário:</strong> ${escaparHtml(obter_horario_funcionamento(properties) || "Não informado")}<br>
+              <strong>Endereço:</strong> ${escaparHtml(obterValorPropriedade(properties, "tx_endereco_equipamento", "Sem endereço."))}<br>
+              <strong>Quantidade de barracas:</strong> ${escaparHtml(obterValorPropriedade(properties, "qt_equipamento", "Não informada"))}<br><br>
               <strong>Trajeto a pé:</strong> <span id="distance-val">Calculando...</span><br><br>
               <a id="google-maps-link" target="_blank">Abrir rota no Google Maps ↗</a>
               <a id="share-link-feira" href="#" target="_blank" title="Compartilhar feira livre">
@@ -379,22 +429,23 @@ function setupInteractions() {
   });
 
   map.on("mouseenter", "feira-livre-layer", (e) => {
+    const feature = obterFeatureSelecionada(e);
+    if (!feature) return;
+
     map.getCanvas().style.cursor = "pointer";
-    const coordinates = e.features[0].geometry.coordinates.slice();
-    const p = e.features[0].properties;
-    const hoverTitle =
-      p.tx_dia_funcionamento +
-      " - " +
-      p.nm_equipamento +
-      "<br>" +
-      p.tx_endereco_equipamento.replaceAll(" ", "&nbsp;") +
-      "<br> BARRACAS: " +
-      p.qt_equipamento;
-    const title = hoverTitle || "Street Fair";
+    const coordinates = feature.geometry.coordinates.slice();
+    const properties =
+      feature.properties && typeof feature.properties === "object"
+        ? feature.properties
+        : {};
+    const endereco = escaparHtml(
+      obterValorPropriedade(properties, "tx_endereco_equipamento", "Sem endereço."),
+    ).replaceAll(" ", "&nbsp;");
+    const title = `<strong>${escaparHtml(obterValorPropriedade(properties, "tx_dia_funcionamento", "Dia não informado"))} - ${escaparHtml(obterValorPropriedade(properties, "nm_equipamento", "Feira livre"))}</strong><br>${endereco}<br>BARRACAS: ${escaparHtml(obterValorPropriedade(properties, "qt_equipamento", "Não informada"))}`;
     while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
       coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
     }
-    hoverPopup.setLngLat(coordinates).setHTML(`<strong>${title}</strong>`).addTo(map);
+    hoverPopup.setLngLat(coordinates).setHTML(title).addTo(map);
   });
 
   map.on("mouseleave", "feira-livre-layer", () => {
