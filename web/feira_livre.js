@@ -340,10 +340,11 @@ function setupInteractions() {
 
   legendToggle.addEventListener("click", () => {
     const isHidden = legend.classList.toggle("collapsed");
-    legendToggle.textContent = isHidden ? "+" : "X";
+    legendToggle.textContent = isHidden ? "+" : "−";
+    legendToggle.setAttribute("aria-expanded", String(!isHidden));
     legendToggle.setAttribute(
       "aria-label",
-      isHidden ? "Mostrar legenda" : "Ocultar legenda",
+      isHidden ? "Expandir filtros por dia" : "Recolher filtros por dia",
     );
   });
 

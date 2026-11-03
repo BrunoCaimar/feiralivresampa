@@ -31,11 +31,23 @@
       </div>
 
       <div id="legend">
-        <button id="legend-toggle" type="button" aria-label="Ocultar legenda">X</button>
-        <h2>Dia da semana&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+        <button
+          id="legend-toggle"
+          type="button"
+          aria-label="Recolher filtros por dia"
+          aria-expanded="true"
+          aria-controls="weekday-filters"
+        >
+          −
+        </button>
+        <h2>Dia da semana</h2>
         <button id="legend-select-all" type="button">Desmarcar todos</button>
 
-        <div role="group" aria-label="Filtrar feiras por dia da semana">
+        <div
+          id="weekday-filters"
+          role="group"
+          aria-label="Filtrar feiras por dia da semana"
+        >
           <button
             class="legend-item"
             data-day="DOMINGO"
