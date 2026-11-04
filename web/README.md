@@ -76,3 +76,4 @@ npm run format:check
 - Github pages
 - Versão
 - Zoom menor ao abrir na localização
+- Legenda não visivel ao abrir em dispositivos pequenos
