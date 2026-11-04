@@ -55,3 +55,6 @@ npm run format:check
 - PWA
 - Fork me on Github
 - About
+- Responsividade - checar com co-piloto
+- Github pages
+- favicon.ico
