@@ -141,6 +141,11 @@ disponibilizada para interação pela rede, os usuários devem poder obter seu
 código-fonte. Este resumo é informativo; consulte o texto da licença para os
 termos e obrigações completos.
 
+## Uso de IA generativa
+
+O [GitHub Copilot](https://github.com/features/copilot), ferramenta de IA
+generativa, foi utilizado como assistente durante o desenvolvimento desta aplicação.
+
 ## Desenvolvido por
 
 Bruno Caimar, como parte do curso de Especialização em Tecnologia da
