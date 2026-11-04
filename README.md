@@ -114,4 +114,6 @@ termos e obrigações completos.
 
 ## Desenvolvido por
 
-Bruno Caimar — novembro de 2026.
+Bruno Caimar, como parte do curso de Especialização em Tecnologia da
+Informação da [Universidade Federal do ABC (UFABC)](https://www.ufabc.edu.br/)
+— novembro de 2026.
