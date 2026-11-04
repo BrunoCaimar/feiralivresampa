@@ -23,6 +23,26 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Generate deployment version metadata
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+        run: |
+          node --input-type=module <<'NODE'
+          import { writeFile } from "node:fs/promises";
+          import { versao_numero } from "./web/versao.js";
+
+          const versao_data = new Date().toISOString();
+          const versao_hash = process.env.GITHUB_SHA.slice(0, 7);
+          const content = [
+            `export const versao_numero = ${JSON.stringify(versao_numero)};`,
+            `export const versao_data = ${JSON.stringify(versao_data)};`,
+            `export const versao_hash = ${JSON.stringify(versao_hash)};`,
+            "",
+          ].join("\n");
+
+          await writeFile("./web/versao.js", content);
+          NODE
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
