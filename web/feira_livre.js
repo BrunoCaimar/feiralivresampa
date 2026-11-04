@@ -279,11 +279,69 @@ function escaparHtml(value) {
 }
 
 function setupInteractions() {
-  const toggleBtn = document.getElementById("toggle-button");
+  const menuButton = document.getElementById("menu-button");
+  const menu = document.getElementById("menu");
+  const menuLegendToggle = document.getElementById("menu-legend-toggle");
+  const menuLegendLabel = document.getElementById("menu-legend-label");
+  const menuAboutButton = document.getElementById("menu-about");
+  const aboutDialog = document.getElementById("about-dialog");
+  const closeAboutDialogButton = document.getElementById("close-about-dialog");
   const legend = document.getElementById("legend");
   const legendToggle = document.getElementById("legend-toggle");
   const legendItems = document.querySelectorAll(".legend-item");
   const selectAllBtn = document.getElementById("legend-select-all");
+
+  function closeMenu() {
+    menu.hidden = true;
+    menuButton.setAttribute("aria-expanded", "false");
+    menuButton.setAttribute("aria-label", "Abrir menu");
+  }
+
+  menuButton.addEventListener("click", () => {
+    const isOpen = menuButton.getAttribute("aria-expanded") === "true";
+    menu.hidden = isOpen;
+    menuButton.setAttribute("aria-expanded", String(!isOpen));
+    menuButton.setAttribute("aria-label", isOpen ? "Abrir menu" : "Fechar menu");
+  });
+
+  document.addEventListener("click", (event) => {
+    if (
+      !menu.hidden &&
+      !menu.contains(event.target) &&
+      !menuButton.contains(event.target)
+    ) {
+      closeMenu();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !menu.hidden) {
+      closeMenu();
+      menuButton.focus();
+    }
+  });
+
+  menuLegendToggle.addEventListener("click", () => {
+    const isVisible = !legend.hidden;
+    legend.hidden = isVisible;
+    menuLegendToggle.setAttribute("aria-pressed", String(!isVisible));
+    menuLegendLabel.textContent = isVisible ? "Exibir legenda" : "Ocultar legenda";
+    closeMenu();
+    menuButton.focus();
+  });
+
+  menuAboutButton.addEventListener("click", () => {
+    closeMenu();
+    aboutDialog.showModal();
+  });
+
+  aboutDialog.addEventListener("close", () => {
+    menuButton.focus();
+  });
+
+  closeAboutDialogButton.addEventListener("click", () => {
+    aboutDialog.close();
+  });
 
   function updateMapFilter() {
     const activeItems = Array.from(
@@ -346,21 +404,6 @@ function setupInteractions() {
       "aria-label",
       isHidden ? "Expandir filtros por dia" : "Recolher filtros por dia",
     );
-  });
-
-  toggleBtn.addEventListener("click", () => {
-    const visibility = map.getLayoutProperty("feira-livre-layer", "visibility");
-    if (visibility === "visible") {
-      map.setLayoutProperty("feira-livre-layer", "visibility", "none");
-      toggleBtn.textContent = "Habilitar Camada de Feiras Livres";
-      toggleBtn.style.backgroundColor = "#555";
-      legend.style.display = "none";
-    } else {
-      map.setLayoutProperty("feira-livre-layer", "visibility", "visible");
-      toggleBtn.textContent = "Desabilitar Camada de Feiras Livres";
-      toggleBtn.style.backgroundColor = "#1a73e8";
-      legend.style.display = "block";
-    }
   });
 
   function obter_horario_funcionamento(properties) {
