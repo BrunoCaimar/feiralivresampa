@@ -31,7 +31,7 @@
   "screenshots": [
     {
       "src": "images/pwa-screenshot-mobile.png",
-      "sizes": "282x564",
+      "sizes": "320x640",
       "type": "image/png"
     },
     {
