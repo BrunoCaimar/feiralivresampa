@@ -18,7 +18,67 @@
   </head>
   <body>
     <header id="title">
+      <button
+        id="menu-button"
+        type="button"
+        aria-label="Abrir menu"
+        aria-expanded="false"
+        aria-controls="menu"
+      >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
       <h1>São Paulo - Onde tem feira livre?</h1>
+      <nav id="menu" aria-label="Menu principal" hidden>
+        <button
+          id="menu-legend-toggle"
+          class="menu-item"
+          type="button"
+          aria-controls="legend"
+          aria-pressed="true"
+        >
+          <svg
+            class="menu-icon"
+            aria-hidden="true"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+          <span id="menu-legend-label">Ocultar legenda</span>
+        </button>
+        <button id="menu-about" class="menu-item" type="button">
+          <svg
+            class="menu-icon"
+            aria-hidden="true"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 11v5m0-8h.01" />
+          </svg>
+          <span>Sobre</span>
+        </button>
+        <a
+          class="menu-item"
+          href="https://github.com/BrunoCaimar/feiralivresampa"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg
+            class="menu-icon"
+            aria-hidden="true"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path d="M14 4h6v6m-1-5-9 9" />
+            <path d="M18 13v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h6" />
+          </svg>
+          <span>Fork me on GitHub</span>
+        </a>
+      </nav>
     </header>
     <main>
       <div
@@ -26,10 +86,6 @@
         role="application"
         aria-label="Mapa interativo das feiras livres de São Paulo"
       ></div>
-
-      <div id="menu">
-        <button id="toggle-button">Desabilitar Camada de Feiras Livres</button>
-      </div>
 
       <div id="legend">
         <button
@@ -117,6 +173,26 @@
       <h2 id="dialog-title">Feira Livre</h2>
       <p id="dialog-description"></p>
       <button id="close-dialog" type="button">Fechar</button>
+    </dialog>
+
+    <dialog
+      id="about-dialog"
+      aria-labelledby="about-title"
+      aria-describedby="about-description"
+    >
+      <h2 id="about-title">Sobre</h2>
+      <p id="about-description">
+        Aplicação Web com mapa interativo das feiras livres de São Paulo. <br /><br />
+        Essa aplicação está utilizando os dados abertos das feiras livres disponibilizados pelo <a href="https://novogeosampa.prefeitura.sp.gov.br/" target="_blank" rel="noopener noreferrer">GeoSampa</a> da prefeitura de São Paulo sob a licença
+        <a
+          href="https://creativecommons.org/licenses/by-sa/4.0/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          CC BY-SA 4.0 </a>.<br /><br />
+        Desenvolvido por <a href="https://github.com/BrunoCaimar/" target="_blank" rel="noopener noreferrer">Bruno Caimar</a><br /><br />Versão 0.0.1 - novembro de 2026.<br />
+      </p>
+      <button id="close-about-dialog" type="button">Fechar</button>
     </dialog>
 
     <script type="module" src="feira_livre.js"></script>
