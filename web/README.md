@@ -1,6 +1,6 @@
 # Aplicação web Feira Livre Sampa
 
-Aplicação web que exibe feiras livres da cidade de São Paulo em um mapa. É possível filtrar as feiras por dia da semana, consultar detalhes de cada feira, usar a localização do navegador e visualizar uma sugestão de trajeto a pé.
+Aplicação web que exibe feiras livres da cidade de São Paulo em um mapa. É possível filtrar as feiras por dia da semana, consultar detalhes de cada feira, usar a localização do navegador e visualizar uma sugestão de trajeto a pé. O menu no cabeçalho permite exibir ou ocultar a legenda, abrir informações sobre o projeto e acessar o repositório no GitHub.
 
 ## Arquivos
 
@@ -53,8 +53,6 @@ npm run format:check
 
 - Botão compartilhar
 - PWA
-- Fork me on Github
-- About
 - Responsividade - checar com co-piloto
 - Github pages
 - favicon.ico
