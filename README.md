@@ -13,6 +13,7 @@ Aplicação web para visualizar a localização das feiras livres na cidade de S
 - Link para abrir o trajeto no Google Maps.
 - Menu com controle da legenda, informações sobre o projeto e acesso ao
   repositório.
+- Instalação como aplicativo em navegadores compatíveis.
 
 ## Tecnologias e serviços
 
@@ -29,7 +30,8 @@ Aplicação web para visualizar a localização das feiras livres na cidade de S
 O mapa e os serviços de rota precisam de conexão com a internet. A localização
 depende da permissão do usuário e de um contexto seguro do navegador, como
 `localhost` ou HTTPS. As chaves dos serviços usadas pelo frontend são entregues
-ao navegador; configure restrições e limites de uso nos provedores.
+ao navegador; configure restrições e limites de uso nos provedores. A
+instalação não adiciona suporte offline.
 
 ## Pré-requisitos
 
