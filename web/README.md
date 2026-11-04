@@ -12,6 +12,25 @@ Aplicação web que exibe feiras livres da cidade de São Paulo em um mapa. É p
 
 Os dados GeoJSON são obtidos pelo script em `scripts/` e copiados para `web/data`. Consulte [`../scripts/README.MD`](../scripts/README.MD) para instruções de atualização.
 
+## Tecnologias e bibliotecas
+
+- **HTML5, CSS3 e JavaScript (ES modules):** estrutura, estilos e interações da aplicação, sem framework de interface.
+- **MapLibre GL JS 6.16.0:** renderização do mapa interativo e das camadas GeoJSON.
+- **GeoJSON:** formato dos dados das feiras carregados em `data/equipamento_feira_livre.geojson`.
+- **API de Geolocalização do navegador:** obtenção da localização do usuário, mediante permissão do navegador.
+- **ESLint e Prettier:** análise estática e formatação dos arquivos do frontend.
+
+## Serviços externos
+
+- **MapTiler:** estilo e mapas de base.
+- **OpenRouteService:** cálculo de trajetos a pé.
+- **Google Maps:** abertura de rotas externas.
+- **GeoSampa:** fonte dos dados abertos das feiras livres.
+- **unpkg:** distribuição do MapLibre GL JS e de seus estilos.
+- **GitHub:** repositório, favicon e imagens de marcadores carregados externamente.
+
+O mapa e alguns recursos dependem de conexão com esses serviços. As chaves de acesso dos provedores usadas pelo frontend são entregues ao navegador; configure restrições e limites de uso nos respectivos provedores.
+
 ## Executar localmente
 
 Sirva a pasta `web` por HTTP:
@@ -55,4 +74,4 @@ npm run format:check
 - PWA
 - Responsividade - checar com co-piloto
 - Github pages
-
+- SHARE
