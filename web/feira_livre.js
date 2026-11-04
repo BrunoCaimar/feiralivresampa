@@ -1,4 +1,5 @@
 import * as maplibregl from "https://unpkg.com/maplibre-gl@6.16.0/dist/maplibre-gl.mjs";
+import { versao_data, versao_hash, versao_numero } from "./versao.js";
 
 const ORS_API_KEY =
   "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImNkZTljYTNjYWE2NjQxYzM5MjBmY2M2N2EwZWIyZjRlIiwiaCI6Im11cm11cjY0In0=";
@@ -290,11 +291,19 @@ function setupInteractions() {
   const menuLegendLabel = document.getElementById("menu-legend-label");
   const menuAboutButton = document.getElementById("menu-about");
   const aboutDialog = document.getElementById("about-dialog");
+  const aboutVersion = document.getElementById("about-version");
   const closeAboutDialogButton = document.getElementById("close-about-dialog");
   const legend = document.getElementById("legend");
   const legendToggle = document.getElementById("legend-toggle");
   const legendItems = document.querySelectorAll(".legend-item");
   const selectAllBtn = document.getElementById("legend-select-all");
+  const formattedVersionDate = new Intl.DateTimeFormat("pt-BR", {
+    dateStyle: "long",
+    timeStyle: "short",
+    timeZone: "America/Sao_Paulo",
+  }).format(new Date(versao_data));
+  const versionHash = versao_hash === "#" ? "" : ` — ${versao_hash}`;
+  aboutVersion.textContent = `Versão ${versao_numero}${versionHash} — ${formattedVersionDate}.`;
 
   function closeMenu() {
     menu.hidden = true;
