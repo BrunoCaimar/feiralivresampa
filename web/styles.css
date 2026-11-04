@@ -188,15 +188,34 @@ main {
 }
 
 #legend-select-all {
-  background: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
   border: none;
   color: #1a73e8;
   font-weight: bold;
   cursor: pointer;
   padding: 0;
-  margin-bottom: 12px;
+  margin-top: 12px;
   font-size: 13px;
   text-decoration: underline;
+}
+
+#legend-select-all:focus-visible {
+  outline: 2px solid #1a73e8;
+  outline-offset: 2px;
+}
+
+.legend-select-all-icon {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
 }
 
 #legend-select-all:hover {

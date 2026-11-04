@@ -297,6 +297,7 @@ function setupInteractions() {
   const legendToggle = document.getElementById("legend-toggle");
   const legendItems = document.querySelectorAll(".legend-item");
   const selectAllBtn = document.getElementById("legend-select-all");
+  const selectAllLabel = document.getElementById("legend-select-all-label");
   const formattedVersionDate = new Intl.DateTimeFormat("pt-BR", {
     dateStyle: "long",
     timeStyle: "short",
@@ -362,7 +363,7 @@ function setupInteractions() {
       document.querySelectorAll(".legend-item:not(.inactive)"),
     );
     const checkedDays = activeItems.map((item) => item.getAttribute("data-day"));
-    selectAllBtn.textContent =
+    selectAllLabel.textContent =
       activeItems.length === legendItems.length
         ? "Desmarcar todos"
         : "Selecionar todos";
