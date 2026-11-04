@@ -27,6 +27,13 @@ Os dados GeoJSON são obtidos pelo script em `scripts/` e copiados para `web/dat
 - **API de Geolocalização do navegador:** obtenção da localização do usuário, mediante permissão do navegador.
 - **ESLint e Prettier:** análise estática e formatação dos arquivos do frontend.
 
+Os ícones de instalação combinam o contorno do município de São Paulo,
+baseado na malha territorial do
+[IBGE](https://servicodados.ibge.gov.br/api/v3/malhas/municipios/3550308?formato=application%2Fvnd.geo%2Bjson&qualidade=maxima&projecao=4674),
+com a barraca da feira. A composição e os arquivos dos ícones foram gerados
+pelo [GitHub Copilot](https://github.com/features/copilot), com base nessa fonte
+geográfica.
+
 ## Serviços externos
 
 - **MapTiler:** estilo e mapas de base.
