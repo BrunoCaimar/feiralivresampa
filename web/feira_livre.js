@@ -5,6 +5,7 @@ const ORS_API_KEY =
 const MAPTILER_API_KEY = "auHi8tQJGZuSo0I0DjdX";
 
 let userLocation = null;
+let routeRequestController = null;
 
 const map = new maplibregl.Map({
   container: "map",
@@ -19,11 +20,15 @@ const dialogTitle = document.getElementById("dialog-title");
 const dialogDesc = document.getElementById("dialog-description");
 const closeBtn = document.getElementById("close-dialog");
 
-closeBtn.addEventListener("click", () => {
-  console.log("Closing dialog and clearing route line...");
-  dialog.close();
-  if (map.getSource("route-line")) {
-    map.getSource("route-line").setData({ type: "FeatureCollection", features: [] });
+closeBtn.addEventListener("click", () => dialog.close());
+
+dialog.addEventListener("close", () => {
+  routeRequestController?.abort();
+  routeRequestController = null;
+
+  const routeSource = map.getSource("route-line");
+  if (routeSource) {
+    routeSource.setData({ type: "FeatureCollection", features: [] });
   }
 });
 
@@ -436,6 +441,8 @@ function setupInteractions() {
         ? feature.properties
         : {};
     const targetCoords = feature.geometry.coordinates.slice();
+    routeRequestController?.abort();
+    routeRequestController = null;
 
     const titulo = obterValorPropriedade(properties, "nm_equipamento", "Feira livre");
 
@@ -466,12 +473,16 @@ function setupInteractions() {
       gMapsLink.href = googleMapsUrl;
       gMapsLink.style.display = "inline-block";
 
+      const requestController = new AbortController();
+      routeRequestController = requestController;
+
       try {
         const url = `https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${ORS_API_KEY}&start=${userLocation[0]},${userLocation[1]}&end=${targetCoords[0]},${targetCoords[1]}`;
-        const response = await fetch(url);
+        const response = await fetch(url, { signal: requestController.signal });
         if (!response.ok) throw new Error("Routing API failed");
 
         const data = await response.json();
+        if (requestController.signal.aborted || !dialog.open) return;
 
         if (map.getSource("route-line")) {
           map.getSource("route-line").setData(data);
@@ -505,8 +516,13 @@ function setupInteractions() {
         distanceSpan.innerHTML = `${distText} (~${timeText})`;
         distanceSpan.style.color = "#333";
       } catch {
+        if (requestController.signal.aborted) return;
         distanceSpan.textContent = "Erro ao calcular trajeto.";
         distanceSpan.style.color = "red";
+      } finally {
+        if (routeRequestController === requestController) {
+          routeRequestController = null;
+        }
       }
     } else {
       distanceSpan.textContent = "Ative sua localização para calcular.";
