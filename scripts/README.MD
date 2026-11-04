@@ -66,7 +66,12 @@ Execute o script a partir da pasta `scripts`:
 uv run obter_dados_feiras_livres.py
 ````
 
+O workflow do GitHub Actions também executa esse script diariamente às 05:00 UTC.
+Quando os arquivos gerados mudam, ele os registra na branch padrão e atualiza o
+site publicado no GitHub Pages. A execução pode ser iniciada manualmente pela
+aba **Actions**. Consulte o [README principal](../README.md#atualizar-os-dados-das-feiras)
+para detalhes de configuração.
+
 ## TO DO
 
 - Timestamp para marcar data de última execução
-- Github action para executar o script periodicamente

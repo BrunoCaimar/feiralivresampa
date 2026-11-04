@@ -88,6 +88,14 @@ WGS84, salva o resultado em `scripts/data/` e o copia para `web/data/`. A
 requisição tem timeout de 30 segundos; respostas HTTP com erro interrompem a
 execução.
 
+O workflow [Update feira data](.github/workflows/update-feira-data.yml) executa
+esse processo diariamente às **05:00 UTC**, registra um commit quando os dados
+mudam e publica a versão atualizada no GitHub Pages. Também pode ser iniciado
+manualmente pela aba **Actions**. A primeira execução exige que o GitHub Pages
+esteja configurado com **GitHub Actions** como fonte e que as permissões do
+workflow permitam escrita no repositório. Se necessário, habilite **Read and
+write permissions** em **Settings → Actions → General → Workflow permissions**.
+
 Para ajustar endpoints, camada, sistema de coordenadas ou nome do arquivo,
 edite `scripts/config.py`. Mais detalhes estão em
 [`scripts/README.MD`](scripts/README.MD).

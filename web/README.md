@@ -74,4 +74,5 @@ npm run format:check
 - PWA
 - Responsividade - checar com co-piloto
 - Github pages
-- SHARE
+- Versão
+- Zoom menor ao abrir na localização
