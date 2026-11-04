@@ -2,13 +2,19 @@
 
 Aplicação web que exibe feiras livres da cidade de São Paulo em um mapa. É possível filtrar as feiras por dia da semana, consultar detalhes de cada feira, usar a localização do navegador e visualizar uma sugestão de trajeto a pé.
 
+A aplicação pode ser instalada como um app em navegadores compatíveis. Essa
+instalação não inclui suporte offline; o mapa e os serviços externos exigem
+conexão com a internet.
+
 ## Arquivos
 
 - `index.html`: arquivo principal da aplicação.
+- `manifest.webmanifest`: metadados de instalação da aplicação.
 - `styles.css`: estilos da interface.
 - `feira_livre.js`: código javascript da aplicação.
 - `data/equipamento_feira_livre.geojson`: dados das feiras exibidos no mapa.
 - `images/`: imagens usadas pela aplicação.
+- `images/pwa-192.png` e `images/pwa-512.png`: ícones da aplicação instalada.
 
 Os dados GeoJSON são obtidos pelo script em `scripts/` e copiados para `web/data`. Consulte [`../scripts/README.MD`](../scripts/README.MD) para instruções de atualização.
 
@@ -17,6 +23,7 @@ Os dados GeoJSON são obtidos pelo script em `scripts/` e copiados para `web/dat
 - **HTML5, CSS3 e JavaScript (ES modules):** estrutura, estilos e interações da aplicação, sem framework de interface.
 - **MapLibre GL JS 6.16.0:** renderização do mapa interativo e das camadas GeoJSON.
 - **GeoJSON:** formato dos dados das feiras carregados em `data/equipamento_feira_livre.geojson`.
+- **Web App Manifest:** metadados para permitir a instalação em navegadores compatíveis.
 - **API de Geolocalização do navegador:** obtenção da localização do usuário, mediante permissão do navegador.
 - **ESLint e Prettier:** análise estática e formatação dos arquivos do frontend.
 
@@ -71,7 +78,6 @@ npm run format:check
 ## TO DO
 
 - Botão compartilhar
-- PWA
 - Responsividade - checar com co-piloto
 - Github pages
 - Versão
