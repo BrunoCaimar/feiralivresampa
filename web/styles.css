@@ -89,6 +89,7 @@ body {
 .menu-item {
   display: flex;
   width: 100%;
+  box-sizing: border-box;
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
