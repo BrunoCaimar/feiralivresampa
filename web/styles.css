@@ -367,3 +367,9 @@ dialog {
     bottom: 10px;
   }
 }
+
+@media (max-width: 480px) {
+  #title h1 {
+    font-size: 14px;
+  }
+}

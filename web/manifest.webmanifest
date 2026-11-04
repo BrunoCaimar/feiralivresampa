@@ -19,7 +19,26 @@
       "src": "images/pwa-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "images/pwa-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "images/pwa-screenshot-mobile.png",
+      "sizes": "282x564",
+      "type": "image/png"
+    },
+    {
+      "src": "images/pwa-screenshot-desktop.png",
+      "sizes": "834x521",
+      "type": "image/png",
+      "form_factor": "wide"
     }
   ]
 }
