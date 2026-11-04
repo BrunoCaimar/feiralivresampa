@@ -54,6 +54,25 @@ navegador.
 Consulte [`web/README.md`](web/README.md) para detalhes sobre as tecnologias,
 serviços e ferramentas do frontend.
 
+## Publicar no GitHub Pages
+
+O workflow [Deploy to GitHub Pages](.github/workflows/deploy-pages.yml) publica
+automaticamente o conteúdo de `web/` após um push na branch padrão. Também é
+possível iniciá-lo manualmente pela aba **Actions** do GitHub. O site deverá
+ficar disponível em <https://brunocaimar.github.io/feiralivresampa/>.
+
+Na primeira publicação:
+
+1. Abra **Settings → Pages** no repositório.
+2. Em **Build and deployment**, selecione **GitHub Actions** como fonte.
+3. Na aba **Actions**, aguarde a execução do workflow terminar e abra o link
+   publicado no ambiente `github-pages`.
+
+O site é estático: chaves usadas no frontend ficam acessíveis aos visitantes.
+Configure restrições de domínio e limites de uso nos provedores de mapas e
+rotas; não coloque segredos no repositório ou no workflow esperando ocultá-los
+do código entregue ao navegador.
+
 ## Atualizar os dados das feiras
 
 Execute o script a partir da pasta `scripts`:
