@@ -89,7 +89,10 @@ npm run format:check
 
 - Botão compartilhar
 - Responsividade - checar com co-piloto
-- Github pages
-- Versão
+- Versão - Melhorar
 - Zoom menor ao abrir na localização
 - Legenda não visivel ao abrir em dispositivos pequenos
+- Easter egg
+- Padronizar os icones
+- Validar localização fora da cidade
+- Pensar se um aviso antes de usar a localização é uma boa estratégia
