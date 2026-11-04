@@ -14,7 +14,10 @@ conexão com a internet.
 - `feira_livre.js`: código javascript da aplicação.
 - `data/equipamento_feira_livre.geojson`: dados das feiras exibidos no mapa.
 - `images/`: imagens usadas pela aplicação.
-- `images/pwa-192.png` e `images/pwa-512.png`: ícones da aplicação instalada.
+- `images/pwa-192.png`, `images/pwa-512.png` e `images/pwa-512-maskable.png`:
+  ícones da aplicação instalada.
+- `images/pwa-screenshot-mobile.png` e `images/pwa-screenshot-desktop.png`:
+  capturas usadas na interface de instalação do PWA.
 
 Os dados GeoJSON são obtidos pelo script em `scripts/` e copiados para `web/data`. Consulte [`../scripts/README.MD`](../scripts/README.MD) para instruções de atualização.
 
