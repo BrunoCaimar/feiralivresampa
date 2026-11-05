@@ -1,4 +1,5 @@
 import * as maplibregl from "https://unpkg.com/maplibre-gl@6.16.0/dist/maplibre-gl.mjs";
+import { booleanPointInPolygon } from "https://cdn.jsdelivr.net/npm/@turf/boolean-point-in-polygon@7.2.0/+esm";
 import { versao_data, versao_hash, versao_numero } from "./versao.js";
 
 const ORS_API_KEY =
@@ -6,14 +7,17 @@ const ORS_API_KEY =
 const MAPTILER_API_KEY = "auHi8tQJGZuSo0I0DjdX";
 const MARKER_ICON_BASE_URL =
   "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-";
+const SAO_PAULO_CENTER = [-46.6333, -23.5505];
 
 let userLocation = null;
+let localizacaoForaMunicipio = false;
+let geometriaLimiteMunicipio = null;
 let routeRequestController = null;
 
 const map = new maplibregl.Map({
   container: "map",
   style: `https://api.maptiler.com/maps/01a0eaed-547f-7e52-a4b5-94650be7ecfd/style.json?key=${MAPTILER_API_KEY}`,
-  center: [-46.6333, -23.5505],
+  center: SAO_PAULO_CENTER,
   zoom: 11,
   attributionControl: false,
 });
@@ -57,8 +61,38 @@ const geolocateControl = new maplibregl.GeolocateControl({
 });
 map.addControl(geolocateControl, "top-right");
 
+async function carregarLimiteMunicipio() {
+  const response = await fetch("data/municipio_sao_paulo.geojson");
+  if (!response.ok) {
+    throw new Error(`Falha ao carregar limite municipal: HTTP ${response.status}`);
+  }
+
+  const data = await response.json();
+  if (!data || typeof data !== "object") {
+    throw new Error("O arquivo do limite municipal contém GeoJSON inválido.");
+  }
+
+  const feature =
+    data.type === "FeatureCollection"
+      ? data.features?.[0]
+      : data.type === "Feature"
+        ? data
+        : null;
+
+  return feature?.geometry;
+}
+
+function estaDentroDoMunicipio(point) {
+  return booleanPointInPolygon(
+    { type: "Point", coordinates: point },
+    geometriaLimiteMunicipio,
+  );
+}
+
 geolocateControl.on("error", async (e) => {
   console.error("User location error:", e);
+  userLocation = null;
+  localizacaoForaMunicipio = false;
   showModal(
     "Erro ao obter sua localização",
     "Não foi possível obter sua localização. Por favor, verifique as permissões do navegador.",
@@ -70,7 +104,11 @@ map.on("load", async () => {
   console.log("Map style:", map.getStyle());
   console.log("Map layers:", map.getStyle().layers);
 
-  geolocateControl.trigger();
+  try {
+    geometriaLimiteMunicipio = await carregarLimiteMunicipio();
+  } catch (error) {
+    console.error("Não foi possível carregar o limite do município.", error);
+  }
 
   const icons = [
     {
@@ -232,13 +270,45 @@ map.on("load", async () => {
 
   startGeolocation();
   setupInteractions();
+
+  if (geometriaLimiteMunicipio) {
+    geolocateControl.trigger();
+  } else {
+    showModal(
+      "Não foi possível validar a localização",
+      "O limite do município não foi carregado. Atualize a página para tentar novamente.",
+    );
+  }
 });
 
 function startGeolocation() {
   console.log("Setting up geolocation functionality...", geolocateControl);
 
   geolocateControl.on("geolocate", async (e) => {
-    userLocation = [e.coords.longitude, e.coords.latitude];
+    const location = [e.coords.longitude, e.coords.latitude];
+    if (!geometriaLimiteMunicipio) {
+      userLocation = null;
+      localizacaoForaMunicipio = false;
+      showModal(
+        "Localização não validada",
+        "Não foi possível carregar o limite do município. Atualize a página e tente novamente.",
+      );
+      return;
+    }
+
+    if (!estaDentroDoMunicipio(location)) {
+      userLocation = null;
+      localizacaoForaMunicipio = true;
+      showModal(
+        "⚠️ Atenção - Fora do limite do município de São Paulo",
+        "Sua localização não se encontra dentro da área do município de São Paulo. O mapa será carregado no centro do município e você poderá visualizar as feiras livres.",
+      );
+      map.easeTo({ center: SAO_PAULO_CENTER, zoom: 11 });
+      return;
+    }
+
+    localizacaoForaMunicipio = false;
+    userLocation = location;
     console.log("User location obtained:", userLocation);
   });
 }
@@ -541,7 +611,9 @@ function setupInteractions() {
         }
       }
     } else {
-      distanceSpan.textContent = "Ative sua localização para calcular.";
+      distanceSpan.textContent = localizacaoForaMunicipio
+        ? "Sua localização está fora do município de São Paulo."
+        : "Ative sua localização para calcular.";
       distanceSpan.style.color = "#555";
       gMapsLink.href = `https://www.google.com/maps/dir/?api=1&destination=${targetCoords[1]},${targetCoords[0]}&travelmode=walking`;
       gMapsLink.style.display = "inline-block";
