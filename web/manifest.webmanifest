@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "Feira Livre Sampa",
-  "short_name": "Feira Sampa",
-  "description": "Encontre feiras livres em São Paulo.",
+  "name": "Feira Livre São Paulo",
+  "short_name": "Feira Livre Sampa",
+  "description": "Encontre feiras livres na cidade de São Paulo.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
