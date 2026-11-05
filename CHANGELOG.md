@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.0.2] - 2026-11-04
+
+- Ajustes legenda - exibir no load somente em telas grandes
+- Ajuste icone da aplicação (favicon.ico)
+
 ## [0.0.1] - 2026-11-03
 
 - Adicionado mapa interativo de feiras livres de São Paulo com filtros por dia,
