@@ -39,7 +39,7 @@
           class="menu-item"
           type="button"
           aria-controls="legend"
-          aria-pressed="true"
+          aria-pressed="false"
         >
           <svg
             class="menu-icon"
@@ -50,7 +50,7 @@
             <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" />
             <circle cx="12" cy="12" r="3" />
           </svg>
-          <span id="menu-legend-label">Ocultar legenda</span>
+          <span id="menu-legend-label">Exibir legenda</span>
         </button>
         <button id="menu-about" class="menu-item" type="button">
           <svg
@@ -87,16 +87,7 @@
         aria-label="Mapa interativo das feiras livres de São Paulo"
       ></div>
 
-      <div id="legend">
-        <button
-          id="legend-toggle"
-          type="button"
-          aria-label="Recolher filtros por dia"
-          aria-expanded="true"
-          aria-controls="weekday-filters"
-        >
-          −
-        </button>
+      <div id="legend" hidden>
         <h2>Dia da semana</h2>
 
         <div

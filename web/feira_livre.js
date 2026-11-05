@@ -294,10 +294,24 @@ function setupInteractions() {
   const aboutVersion = document.getElementById("about-version");
   const closeAboutDialogButton = document.getElementById("close-about-dialog");
   const legend = document.getElementById("legend");
-  const legendToggle = document.getElementById("legend-toggle");
   const legendItems = document.querySelectorAll(".legend-item");
   const selectAllBtn = document.getElementById("legend-select-all");
   const selectAllLabel = document.getElementById("legend-select-all-label");
+  const shouldShowLegendInitially = window.innerHeight > 700;
+
+  console.info(
+    "Viewport height:",
+    window.innerHeight,
+    "Show legend initially:",
+    shouldShowLegendInitially,
+  );
+
+  legend.hidden = !shouldShowLegendInitially;
+  menuLegendToggle.setAttribute("aria-pressed", String(shouldShowLegendInitially));
+  menuLegendLabel.textContent = shouldShowLegendInitially
+    ? "Ocultar legenda"
+    : "Exibir legenda";
+
   const formattedVersionDate = new Intl.DateTimeFormat("pt-BR", {
     dateStyle: "long",
     timeStyle: "short",
@@ -410,16 +424,6 @@ function setupInteractions() {
   });
 
   updateMapFilter();
-
-  legendToggle.addEventListener("click", () => {
-    const isHidden = legend.classList.toggle("collapsed");
-    legendToggle.textContent = isHidden ? "+" : "−";
-    legendToggle.setAttribute("aria-expanded", String(!isHidden));
-    legendToggle.setAttribute(
-      "aria-label",
-      isHidden ? "Expandir filtros por dia" : "Recolher filtros por dia",
-    );
-  });
 
   function obter_horario_funcionamento(properties) {
     const categoria = properties.cd_tipo_categoria;
