@@ -13,6 +13,9 @@ conexão com a internet.
 - `styles.css`: estilos da interface.
 - `feira_livre.js`: código javascript da aplicação.
 - `data/equipamento_feira_livre.geojson`: dados das feiras exibidos no mapa.
+- `data/municipio_sao_paulo.geojson`: polígono do município de São Paulo,
+  obtido da [API de malhas municipais do IBGE](https://servicodados.ibge.gov.br/api/v3/malhas/municipios/3550308?formato=application%2Fvnd.geo%2Bjson&qualidade=maxima&projecao=4674)
+  (código 3550308).
 - `images/`: imagens usadas pela aplicação.
 - `images/pwa-192.png`, `images/pwa-512.png` e `images/pwa-512-maskable.png`:
   ícones da aplicação instalada.
