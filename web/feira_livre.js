@@ -6,8 +6,17 @@ import { versao_data, versao_hash, versao_numero } from "./versao.js";
 const ORS_API_KEY =
   "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImNkZTljYTNjYWE2NjQxYzM5MjBmY2M2N2EwZWIyZjRlIiwiaCI6Im11cm11cjY0In0=";
 const MAPTILER_API_KEY = "auHi8tQJGZuSo0I0DjdX";
+const MAPTILER_STYLE_URL = `https://api.maptiler.com/maps/01a0eaed-547f-7e52-a4b5-94650be7ecfd/style.json?key=${MAPTILER_API_KEY}`;
 const MARKER_ICON_BASE_URL =
   "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-";
+const GEOSAMPA_URL = "https://novogeosampa.prefeitura.sp.gov.br/";
+const ORS_DIRECTIONS_URL = "https://api.openrouteservice.org/v2/directions/foot-walking";
+const GOOGLE_MAPS_URL = "https://www.google.com/maps/dir/";
+const GEOJSON_MUNICIPIO_URL = "data/municipio_sao_paulo.geojson";
+const GEOJSON_FEIRA_LIVRE_URL = "data/equipamento_feira_livre.geojson";
+const SHARE_IMAGE_PATH = "images/share.png";
+const SHARE_LINK_PLACEHOLDER = "#";
+const SVG_NAMESPACE_URL = "http://www.w3.org/2000/svg";
 const SAO_PAULO_CENTER = [-46.6333, -23.5505];
 const TOLERANCIA_LOCALIZACAO_KILOMETROS = 3;
 
@@ -18,7 +27,7 @@ let routeRequestController = null;
 
 const map = new maplibregl.Map({
   container: "map",
-  style: `https://api.maptiler.com/maps/01a0eaed-547f-7e52-a4b5-94650be7ecfd/style.json?key=${MAPTILER_API_KEY}`,
+  style: MAPTILER_STYLE_URL,
   center: SAO_PAULO_CENTER,
   zoom: 11,
   attributionControl: false,
@@ -50,8 +59,7 @@ map.addControl(scale);
 map.addControl(
   new maplibregl.AttributionControl({
     compact: true,
-    customAttribution:
-      "© <a href='https://novogeosampa.prefeitura.sp.gov.br/' target='_blank'>GEOSAMPA - CC-BY-SA - 2026</a>",
+    customAttribution: `© <a href='${GEOSAMPA_URL}' target='_blank'>GEOSAMPA - CC-BY-SA - 2026</a>`,
   }),
 );
 
@@ -64,7 +72,7 @@ const geolocateControl = new maplibregl.GeolocateControl({
 map.addControl(geolocateControl, "top-right");
 
 async function carregarLimiteMunicipio() {
-  const response = await fetch("data/municipio_sao_paulo.geojson");
+  const response = await fetch(GEOJSON_MUNICIPIO_URL);
   if (!response.ok) {
     throw new Error(`Falha ao carregar limite municipal: HTTP ${response.status}`);
   }
@@ -206,7 +214,7 @@ map.on("load", async () => {
   }
 
   function getTentSvgString(color = "#E63946") {
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+    return `<svg xmlns="${SVG_NAMESPACE_URL}" viewBox="0 0 640 640">
     <path fill="${color}" d="M90.9 270.9L67.7 508.9C65.8 527.7 80.6 544 99.5 544L272.2 544C298.7 544 320.2 522.5 320.2 496L320.2 367C320.2 358.7 326.9 352 335.2 352C340.7 352 345.8 355 348.4 359.9L434.5 518.9C442.9 534.4 459.1 544 476.7 544L540.8 544C559.7 544 574.5 527.7 572.6 508.9L549.6 271.1C547.7 251.5 536.8 233.8 520.1 223.3L344.9 112.3C329.2 102.3 309.1 102.4 293.4 112.4L120.1 223.2C103.6 233.8 92.8 251.4 90.9 270.9z"/>
 </svg>`;
   }
@@ -236,7 +244,7 @@ map.on("load", async () => {
 
   const feira_livre_source = map.addSource("feira-livre-data", {
     type: "geojson",
-    data: "data/equipamento_feira_livre.geojson",
+    data: GEOJSON_FEIRA_LIVRE_URL,
   });
 
   console.log("feira-livre-source", feira_livre_source);
@@ -556,8 +564,8 @@ function setupInteractions() {
               <strong>Quantidade de barracas:</strong> ${escaparHtml(obterValorPropriedade(properties, "qt_equipamento", "Não informada"))}<br><br>
               <strong>Trajeto a pé:</strong> <span id="distance-val">Calculando...</span><br><br>
               <a id="google-maps-link" target="_blank">Abrir rota no Google Maps ↗</a>
-              <a id="share-link-feira" href="#" target="_blank" title="Compartilhar feira livre">
-              <img src="images/share.png" alt="Compartilhar feira livre" style="width: 20px; height: 20px; vertical-align: middle; margin-left: 35px;">
+              <a id="share-link-feira" href="${SHARE_LINK_PLACEHOLDER}" target="_blank" title="Compartilhar feira livre">
+              <img src="${SHARE_IMAGE_PATH}" alt="Compartilhar feira livre" style="width: 20px; height: 20px; vertical-align: middle; margin-left: 35px;">
               </a>
           `;
 
@@ -572,16 +580,31 @@ function setupInteractions() {
 
     console.log("User location:", userLocation);
     if (userLocation) {
-      const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${userLocation[1]},${userLocation[0]}&destination=${targetCoords[1]},${targetCoords[0]}&travelmode=walking`;
-      gMapsLink.href = googleMapsUrl;
+      const googleMapsUrl = new URL(GOOGLE_MAPS_URL);
+      googleMapsUrl.searchParams.set("api", "1");
+      googleMapsUrl.searchParams.set("origin", `${userLocation[1]},${userLocation[0]}`);
+      googleMapsUrl.searchParams.set(
+        "destination",
+        `${targetCoords[1]},${targetCoords[0]}`,
+      );
+      googleMapsUrl.searchParams.set("travelmode", "walking");
+      gMapsLink.href = googleMapsUrl.toString();
       gMapsLink.style.display = "inline-block";
 
       const requestController = new AbortController();
       routeRequestController = requestController;
 
       try {
-        const url = `https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${ORS_API_KEY}&start=${userLocation[0]},${userLocation[1]}&end=${targetCoords[0]},${targetCoords[1]}`;
-        const response = await fetch(url, { signal: requestController.signal });
+        const directionsUrl = new URL(ORS_DIRECTIONS_URL);
+        directionsUrl.searchParams.set("api_key", ORS_API_KEY);
+        directionsUrl.searchParams.set(
+          "start",
+          `${userLocation[0]},${userLocation[1]}`,
+        );
+        directionsUrl.searchParams.set("end", `${targetCoords[0]},${targetCoords[1]}`);
+        const response = await fetch(directionsUrl, {
+          signal: requestController.signal,
+        });
         if (!response.ok) throw new Error("Routing API failed");
 
         const data = await response.json();
@@ -632,7 +655,14 @@ function setupInteractions() {
         ? "Sua localização está fora do município de São Paulo."
         : "Ative sua localização para calcular.";
       distanceSpan.style.color = "#555";
-      gMapsLink.href = `https://www.google.com/maps/dir/?api=1&destination=${targetCoords[1]},${targetCoords[0]}&travelmode=walking`;
+      const googleMapsUrl = new URL(GOOGLE_MAPS_URL);
+      googleMapsUrl.searchParams.set("api", "1");
+      googleMapsUrl.searchParams.set(
+        "destination",
+        `${targetCoords[1]},${targetCoords[0]}`,
+      );
+      googleMapsUrl.searchParams.set("travelmode", "walking");
+      gMapsLink.href = googleMapsUrl.toString();
       gMapsLink.style.display = "inline-block";
     }
   });
