@@ -1,4 +1,5 @@
 import * as maplibregl from "https://unpkg.com/maplibre-gl@6.16.0/dist/maplibre-gl.mjs";
+import { buffer } from "https://cdn.jsdelivr.net/npm/@turf/buffer@7.2.0/+esm";
 import { booleanPointInPolygon } from "https://cdn.jsdelivr.net/npm/@turf/boolean-point-in-polygon@7.2.0/+esm";
 import { versao_data, versao_hash, versao_numero } from "./versao.js";
 
@@ -8,10 +9,11 @@ const MAPTILER_API_KEY = "auHi8tQJGZuSo0I0DjdX";
 const MARKER_ICON_BASE_URL =
   "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-";
 const SAO_PAULO_CENTER = [-46.6333, -23.5505];
+const TOLERANCIA_LOCALIZACAO_KILOMETROS = 3;
 
 let userLocation = null;
 let localizacaoForaMunicipio = false;
-let geometriaLimiteMunicipio = null;
+let limiteMunicipioComBuffer = null;
 let routeRequestController = null;
 
 const map = new maplibregl.Map({
@@ -79,13 +81,27 @@ async function carregarLimiteMunicipio() {
         ? data
         : null;
 
-  return feature?.geometry;
+  const geometry = feature?.geometry;
+  if (!geometry || !["Polygon", "MultiPolygon"].includes(geometry.type)) {
+    throw new Error("O arquivo do limite municipal não contém um polígono válido.");
+  }
+
+  const limiteMunicipioComBuffer = buffer(
+    { type: "Feature", properties: {}, geometry },
+    TOLERANCIA_LOCALIZACAO_KILOMETROS,
+    { units: "kilometers" },
+  );
+  if (!limiteMunicipioComBuffer) {
+    throw new Error("Não foi possível aplicar a margem ao limite municipal.");
+  }
+
+  return limiteMunicipioComBuffer;
 }
 
 function estaDentroDoMunicipio(point) {
   return booleanPointInPolygon(
     { type: "Point", coordinates: point },
-    geometriaLimiteMunicipio,
+    limiteMunicipioComBuffer,
   );
 }
 
@@ -105,7 +121,7 @@ map.on("load", async () => {
   console.log("Map layers:", map.getStyle().layers);
 
   try {
-    geometriaLimiteMunicipio = await carregarLimiteMunicipio();
+    limiteMunicipioComBuffer = await carregarLimiteMunicipio();
   } catch (error) {
     console.error("Não foi possível carregar o limite do município.", error);
   }
@@ -271,7 +287,7 @@ map.on("load", async () => {
   startGeolocation();
   setupInteractions();
 
-  if (geometriaLimiteMunicipio) {
+  if (limiteMunicipioComBuffer) {
     geolocateControl.trigger();
   } else {
     showModal(
@@ -286,7 +302,7 @@ function startGeolocation() {
 
   geolocateControl.on("geolocate", async (e) => {
     const location = [e.coords.longitude, e.coords.latitude];
-    if (!geometriaLimiteMunicipio) {
+    if (!limiteMunicipioComBuffer) {
       userLocation = null;
       localizacaoForaMunicipio = false;
       showModal(
