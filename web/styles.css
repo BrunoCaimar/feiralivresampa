@@ -147,44 +147,8 @@ main {
 }
 
 #legend h2 {
-  margin: 0 36px 10px 0;
+  margin: 0 0 10px;
   font-size: 16px;
-}
-
-#legend.collapsed {
-  padding: 8px 34px 8px 8px;
-}
-
-#legend.collapsed > :not(#legend-toggle) {
-  display: none;
-}
-
-#legend-toggle {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  display: grid;
-  width: 28px;
-  height: 28px;
-  place-items: center;
-  border: none;
-  border-radius: 50%;
-  background: #e8f0fe;
-  color: #1a73e8;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 1;
-  padding: 0;
-}
-
-#legend-toggle:hover {
-  background: #d2e3fc;
-}
-
-#legend-toggle:focus-visible {
-  outline: 2px solid #1a73e8;
-  outline-offset: 2px;
 }
 
 #legend-select-all {
