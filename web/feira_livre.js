@@ -4,6 +4,8 @@ import { versao_data, versao_hash, versao_numero } from "./versao.js";
 const ORS_API_KEY =
   "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImNkZTljYTNjYWE2NjQxYzM5MjBmY2M2N2EwZWIyZjRlIiwiaCI6Im11cm11cjY0In0=";
 const MAPTILER_API_KEY = "auHi8tQJGZuSo0I0DjdX";
+const MARKER_ICON_BASE_URL =
+  "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-";
 
 let userLocation = null;
 let routeRequestController = null;
@@ -74,37 +76,37 @@ map.on("load", async () => {
     {
       id: "icon-red",
       color: "#cb2b3e",
-      url: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
+      url: `${MARKER_ICON_BASE_URL}red.png`,
     },
     {
       id: "icon-blue",
       color: "#2a81cb",
-      url: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png",
+      url: `${MARKER_ICON_BASE_URL}blue.png`,
     },
     {
       id: "icon-green",
       color: "#4CAF50",
-      url: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png",
+      url: `${MARKER_ICON_BASE_URL}green.png`,
     },
     {
       id: "icon-gold",
       color: "#FFD700",
-      url: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-gold.png",
+      url: `${MARKER_ICON_BASE_URL}gold.png`,
     },
     {
       id: "icon-violet",
       color: "#9932CC",
-      url: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png",
+      url: `${MARKER_ICON_BASE_URL}violet.png`,
     },
     {
       id: "icon-yellow",
       color: "#FFD700",
-      url: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png",
+      url: `${MARKER_ICON_BASE_URL}yellow.png`,
     },
     {
       id: "icon-grey",
       color: "#808080",
-      url: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png",
+      url: `${MARKER_ICON_BASE_URL}grey.png`,
     },
   ];
 
