@@ -325,6 +325,7 @@ function startGeolocation() {
 
     localizacaoForaMunicipio = false;
     userLocation = location;
+    map.easeTo({ center: location, zoom: 14 });
     console.log("User location obtained:", userLocation);
   });
 }
