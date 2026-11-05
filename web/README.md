@@ -93,7 +93,5 @@ npm run format:check
 - Botão compartilhar
 - Responsividade - checar com co-piloto
 - Versão - Melhorar
-- Zoom menor ao abrir na localização
-- Validar localização fora da cidade
 - Pensar se um aviso antes de usar a localização é uma boa estratégia
 - Easter egg

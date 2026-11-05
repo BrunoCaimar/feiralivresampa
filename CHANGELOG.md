@@ -4,6 +4,7 @@
 
 - Ajustes legenda - exibir no load somente em telas grandes
 - Ajuste icone da aplicação (favicon.ico)
+- Validação localização dentro do municipio
 
 ## [0.0.1] - 2026-11-03
 
