@@ -1,6 +1,6 @@
 # Scripts do projeto feira livre sampa
 
-Essa pasta contém os scripts python utilizados pelo projeto.
+Essa pasta contém os scripts Python utilizados pelo projeto.
 
 ## Instalando o ambiente de execução
 
@@ -11,7 +11,7 @@ Essa pasta contém os scripts python utilizados pelo projeto.
 
 ### Iniciando o ambiente
 
-Para iniciar siga os seguintes passos:
+Para iniciar, siga os seguintes passos:
 
 1 - Sincronize seu ambiente utilizando o uv
 
@@ -41,7 +41,7 @@ uv run ruff check .
 
 ### Obtendo os dados das feiras livres
 
-O script `obter_dados_feiras_livres.py` obtém os dados das feiras livres disponibilizados pela API do GeoSampa. Isso é feito através de uma requisição HTTP, solicitando apenas os dados de feiras livres no formato GeoJSON e no sistema de coordenadas WGS84.
+O script `obter_dados_feiras_livres.py` obtém os dados das feiras livres disponibilizados pela API do GeoSampa. Isso é feito por meio de uma requisição HTTP, solicitando apenas os dados de feiras livres no formato GeoJSON e no sistema de coordenadas WGS84.
 
 O timeout dessa requisição está definido em 30 segundos. Respostas HTTP com erro interrompem a execução. Os dados são salvos em um arquivo chamado `equipamento_feira_livre.geojson` na pasta `scripts/data`. Depois, esse mesmo arquivo é copiado para a pasta `web/data`, para uso pela aplicação web.
 
@@ -58,7 +58,7 @@ O arquivo `config.py` centraliza os valores utilizados pelo script de obtenção
 - `nome_arquivo_saida`: nome do arquivo GeoJSON gerado.
 - `pasta_destino_saida`: pasta dentro de `scripts` onde o arquivo é salvo.
 
-Os valores de configuração nesse arquivo para atualizar os parâmetros sem modificar a lógica do script.
+Altere os valores de configuração nesse arquivo para atualizar os parâmetros sem modificar a lógica do script.
 
 Execute o script a partir da pasta `scripts`:
 

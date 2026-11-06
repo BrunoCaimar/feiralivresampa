@@ -324,8 +324,8 @@ function startGeolocation() {
       userLocation = null;
       localizacaoForaMunicipio = true;
       showModal(
-        "⚠️ Atenção - Fora do limite do município de São Paulo",
-        "Sua localização não se encontra dentro da área do município de São Paulo. O mapa será carregado no centro do município e você poderá visualizar as feiras livres.",
+        "⚠️ Atenção: Fora do limite do município de São Paulo",
+        "Sua localização está fora da área do município de São Paulo. O mapa será carregado no centro do município e você poderá visualizar as feiras livres.",
       );
       map.easeTo({ center: SAO_PAULO_CENTER, zoom: 11 });
       return;
@@ -686,7 +686,7 @@ function setupInteractions() {
     const endereco = escaparHtml(
       obterValorPropriedade(properties, "tx_endereco_equipamento", "Sem endereço."),
     ).replaceAll(" ", "&nbsp;");
-    const title = `<strong>${escaparHtml(obterValorPropriedade(properties, "tx_dia_funcionamento", "Dia não informado"))} - ${escaparHtml(obterValorPropriedade(properties, "nm_equipamento", "Feira livre"))}</strong><br>${endereco}<br>BARRACAS: ${escaparHtml(obterValorPropriedade(properties, "qt_equipamento", "Não informada"))}`;
+    const title = `<strong>${escaparHtml(obterValorPropriedade(properties, "tx_dia_funcionamento", "Dia não informado"))} - ${escaparHtml(obterValorPropriedade(properties, "nm_equipamento", "Feira livre"))}</strong><br>${endereco}<br>Barracas: ${escaparHtml(obterValorPropriedade(properties, "qt_equipamento", "Não informada"))}`;
     while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
       coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
     }

@@ -11,7 +11,7 @@ conexão com a internet.
 - `index.html`: arquivo principal da aplicação.
 - `manifest.webmanifest`: metadados de instalação da aplicação.
 - `styles.css`: estilos da interface.
-- `feira_livre.js`: código javascript da aplicação.
+- `feira_livre.js`: código JavaScript da aplicação.
 - `data/equipamento_feira_livre.geojson`: dados das feiras exibidos no mapa.
 - `data/municipio_sao_paulo.geojson`: polígono do município de São Paulo,
   obtido da [API de malhas municipais do IBGE](https://servicodados.ibge.gov.br/api/v3/malhas/municipios/3550308?formato=application%2Fvnd.geo%2Bjson&qualidade=maxima&projecao=4674)
@@ -96,3 +96,4 @@ npm run format:check
 - Versão - Melhorar
 - Pensar se um aviso antes de usar a localização é uma boa estratégia
 - Easter egg
+- QR Code - Como usar?
