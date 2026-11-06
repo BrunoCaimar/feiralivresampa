@@ -1,8 +1,8 @@
-name: Update feira data
+name: Atualizar dados das feiras livres
 
 on:
   schedule:
-    - cron: "0 5 * * *"
+    - cron: "0 1 * * *"
   workflow_dispatch:
 
 permissions:
@@ -48,11 +48,11 @@ jobs:
           git add scripts/data/equipamento_feira_livre.geojson web/data/equipamento_feira_livre.geojson
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "The downloaded data has not changed."
+            echo "Dados não foram alterados."
           else
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -m "Atualiza dados das feiras livres"
+            git commit -m "Atualiza os dados das feiras livres"
             git push
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
