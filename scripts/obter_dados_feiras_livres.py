@@ -90,7 +90,12 @@ def salvar_dados_feiras_livres(json_data):
             mode="w", encoding="utf-8", dir=pasta_saida, delete=False
         ) as arquivo_temporario:
             caminho_temporario = arquivo_temporario.name
-            json.dump(json_data, arquivo_temporario, ensure_ascii=False, indent=2)
+            json.dump(
+                json_data,
+                arquivo_temporario,
+                ensure_ascii=False,
+                separators=(",", ":"),
+            )
 
         os.replace(caminho_temporario, file_path)
         caminho_temporario = None
