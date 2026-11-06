@@ -44,6 +44,7 @@ uv run ruff check .
 O script `obter_dados_feiras_livres.py` obtém os dados das feiras livres disponibilizados pela API do GeoSampa. Isso é feito por meio de uma requisição HTTP, solicitando apenas os dados de feiras livres no formato GeoJSON e no sistema de coordenadas WGS84.
 
 O timeout dessa requisição está definido em 30 segundos. Respostas HTTP com erro interrompem a execução. Os dados são salvos em um arquivo chamado `equipamento_feira_livre.geojson` na pasta `scripts/data`. Depois, esse mesmo arquivo é copiado para a pasta `web/data`, para uso pela aplicação web.
+O script mantém apenas as propriedades usadas pela aplicação, reduzindo o tamanho dos arquivos GeoJSON.
 
 ### Configuração
 

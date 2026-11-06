@@ -16,6 +16,14 @@ from config import (
     url_geosampa_geoserver,
 )
 
+PROPRIEDADES_UTILIZADAS = (
+    "cd_tipo_categoria",
+    "nm_equipamento",
+    "qt_equipamento",
+    "tx_dia_funcionamento",
+    "tx_endereco_equipamento",
+)
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
@@ -47,6 +55,17 @@ def obter_dados_feiras_livres():
     response.raise_for_status()
 
     json_data = response.json()
+    for feature in json_data["features"]:
+        properties = feature.get("properties")
+        if not isinstance(properties, dict):
+            raise ValueError(
+                "Uma feição retornada pelo GeoSampa não tem propriedades válidas."
+            )
+        feature["properties"] = {
+            name: properties[name]
+            for name in PROPRIEDADES_UTILIZADAS
+            if name in properties
+        }
 
     logging.info(f"Quantidade de feiras existentes: {len(json_data['features'])}")
 
