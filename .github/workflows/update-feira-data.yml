@@ -2,7 +2,7 @@ name: Atualizar dados das feiras livres
 
 on:
   schedule:
-    - cron: "0 1 * * *"
+    - cron: "0 4 * * 5"
   workflow_dispatch:
 
 permissions:
