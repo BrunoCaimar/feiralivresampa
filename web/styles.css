@@ -222,10 +222,6 @@ main {
   background: #cb2b3e;
 }
 
-.legend-item[data-day="SEGUNDA-FEIRA"] .legend-color {
-  background: #989898;
-}
-
 .legend-item[data-day="TERCA-FEIRA"] .legend-color {
   background: #cac428;
 }
