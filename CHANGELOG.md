@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.0.4] - 2026-11-16
+
+- Remove a 2a feira - não tem feira livre nesse dia
+- Adiciona doc com estatísticas dos dados das feiras
+
 ## [0.0.3] - 2026-11-05
 
 - Reduzido o tamanho dos arquivos GeoJSON, mantendo apenas as propriedades
