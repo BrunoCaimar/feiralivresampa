@@ -163,9 +163,13 @@
       aria-labelledby="dialog-title"
       aria-describedby="dialog-description"
     >
+      <button id="close-dialog" class="dialog-close" type="button" aria-label="Fechar">
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+          <path d="m6 6 12 12M18 6 6 18" />
+        </svg>
+      </button>
       <h2 id="dialog-title">Feira Livre</h2>
       <p id="dialog-description"></p>
-      <button id="close-dialog" type="button">Fechar</button>
     </dialog>
 
     <dialog
@@ -173,6 +177,11 @@
       aria-labelledby="about-title"
       aria-describedby="about-description"
     >
+      <button id="close-about-dialog" class="dialog-close" type="button" aria-label="Fechar">
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+          <path d="m6 6 12 12M18 6 6 18" />
+        </svg>
+      </button>
       <h2 id="about-title">Sobre</h2>
       <p id="about-description">
         Aplicação web com mapa interativo das feiras livres de São Paulo.
@@ -203,7 +212,6 @@
         >.
       </p>
       <p id="about-version"></p>
-      <button id="close-about-dialog" type="button">Fechar</button>
     </dialog>
 
     <script type="module" src="feira_livre.js"></script>
