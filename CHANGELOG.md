@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.0.5] - 2026-11-17
+
+- Ajuste botão compartilhar - Agora é possível compartilhar com whatsapp e email.
+- Ajuste botão fechar do dialog - Agora é apenas um ícone
+
 ## [0.0.4] - 2026-11-16
 
 - Remove a 2a feira - não tem feira livre nesse dia
