@@ -1,6 +1,6 @@
 # Aplicação web Feira Livre Sampa
 
-Aplicação web que exibe feiras livres da cidade de São Paulo em um mapa. É possível filtrar as feiras por dia da semana, consultar detalhes de cada feira, usar a localização do navegador e visualizar uma sugestão de trajeto a pé.
+Aplicação web que exibe feiras livres da cidade de São Paulo em um mapa. É possível filtrar as feiras por dia da semana, consultar e compartilhar detalhes de cada feira, usar a localização do navegador e visualizar uma sugestão de trajeto a pé.
 
 A aplicação pode ser instalada como um app em navegadores compatíveis. Essa
 instalação não inclui suporte offline; o mapa e os serviços externos exigem
@@ -32,6 +32,7 @@ Os dados GeoJSON são obtidos pelo script em `scripts/` e copiados para `web/dat
 - **GeoJSON:** formato dos dados das feiras carregados em `data/equipamento_feira_livre.geojson`.
 - **Web App Manifest:** metadados para permitir a instalação em navegadores compatíveis.
 - **API de Geolocalização do navegador:** obtenção da localização do usuário, mediante permissão do navegador.
+- **WhatsApp e e-mail:** compartilhamento dos dados da feira selecionada, incluindo um link do Google Maps com sua localização.
 - **ESLint e Prettier:** análise estática e formatação dos arquivos do frontend.
 
 Os ícones de instalação combinam o contorno do município de São Paulo,
@@ -91,9 +92,9 @@ npm run format:check
 
 ## TO DO
 
-- Botão compartilhar
 - Responsividade - checar com co-piloto
 - Versão - Melhorar
 - Pensar se um aviso antes de usar a localização é uma boa estratégia
 - Easter egg
 - QR Code - Como usar?
+- Duas feiras no mesmo ponto - tratar

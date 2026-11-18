@@ -281,6 +281,43 @@ dialog p {
   margin-bottom: 20px;
 }
 
+.share-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 6px 8px 0 0;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.share-option-whatsapp {
+  color: #128c7e;
+}
+
+.share-icon {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.share-option:hover {
+  background-color: #f0f3f6;
+}
+
+.share-option:focus-visible {
+  outline: 2px solid #1a73e8;
+  outline-offset: 2px;
+}
+
 #distance-val {
   color: #1a73e8;
 }
