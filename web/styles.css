@@ -255,7 +255,7 @@ main {
 dialog {
   border: none;
   border-radius: 8px;
-  padding: 20px;
+  padding: 48px 20px 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   max-width: 300px;
   width: 90%;
@@ -329,21 +329,38 @@ dialog p {
   font-weight: bold;
 }
 
-#close-dialog,
-#close-about-dialog {
-  padding: 8px 16px;
-  background-color: #eee;
+.dialog-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
   color: #333;
-  border: 1px solid #ccc;
-  border-radius: 4px;
   cursor: pointer;
-  width: 100%;
-  font-weight: bold;
 }
 
-#close-dialog:hover,
-#close-about-dialog:hover {
+.dialog-close:hover {
   background-color: #e0e0e0;
+}
+
+.dialog-close:focus-visible {
+  outline: 2px solid #1a73e8;
+  outline-offset: 2px;
+}
+
+.dialog-close svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 2;
 }
 
 .maplibregl-popup-content {
