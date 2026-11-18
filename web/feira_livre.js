@@ -12,10 +12,10 @@ const MARKER_ICON_BASE_URL =
 const GEOSAMPA_URL = "https://novogeosampa.prefeitura.sp.gov.br/";
 const ORS_DIRECTIONS_URL = "https://api.openrouteservice.org/v2/directions/foot-walking";
 const GOOGLE_MAPS_URL = "https://www.google.com/maps/dir/";
+const GOOGLE_MAPS_SEARCH_URL = "https://www.google.com/maps/search/";
+const APP_URL = "https://brunocaimar.github.io/feiralivresampa/";
 const GEOJSON_MUNICIPIO_URL = "data/municipio_sao_paulo.geojson";
 const GEOJSON_FEIRA_LIVRE_URL = "data/equipamento_feira_livre.geojson";
-const SHARE_IMAGE_PATH = "images/share.png";
-const SHARE_LINK_PLACEHOLDER = "#";
 const SVG_NAMESPACE_URL = "http://www.w3.org/2000/svg";
 const SAO_PAULO_CENTER = [-46.6333, -23.5505];
 const TOLERANCIA_LOCALIZACAO_KILOMETROS = 3;
@@ -381,6 +381,42 @@ function escaparHtml(value) {
   });
 }
 
+function configurarLinksCompartilhamento({
+  titulo,
+  dia,
+  horario,
+  endereco,
+  quantidade,
+  coordenadas,
+}) {
+  const shareWhatsAppLink = document.getElementById("share-whatsapp-link");
+  const shareEmailLink = document.getElementById("share-email-link");
+  const googleMapsLocationUrl = new URL(GOOGLE_MAPS_SEARCH_URL);
+  googleMapsLocationUrl.searchParams.set("api", "1");
+  googleMapsLocationUrl.searchParams.set(
+    "query",
+    `${coordenadas[1]},${coordenadas[0]}`,
+  );
+  const shareMessage = [
+    `Veja os dados desta feira livre em São Paulo!`,
+    ``,
+    `⛺️Feira livre: ${titulo}`,
+    `🗓️ Dia da semana: ${dia}`,
+    `⏰ Horário: ${horario}`,
+    `🚏 Endereço: ${endereco}`,
+    `🔢 Quantidade de barracas: ${quantidade}`,
+    ``,
+    `Localização no Google Maps: ${googleMapsLocationUrl}`,
+    ``,
+    `------------------------------`,
+    ``,
+    `Compartilhado via ⛺️ Feira Livre Sampa: ${APP_URL}`,
+  ].join("\n");
+
+  shareWhatsAppLink.href = `https://wa.me/?text=${encodeURIComponent(shareMessage)}`;
+  shareEmailLink.href = `mailto:?subject=${encodeURIComponent(`Feira livre: ${titulo}`)}&body=${encodeURIComponent(shareMessage)}`;
+}
+
 function setupInteractions() {
   const menuButton = document.getElementById("menu-button");
   const menu = document.getElementById("menu");
@@ -556,16 +592,44 @@ function setupInteractions() {
     routeRequestController = null;
 
     const titulo = obterValorPropriedade(properties, "nm_equipamento", "Feira livre");
+    const feiraDia = obterValorPropriedade(
+      properties,
+      "tx_dia_funcionamento",
+      "Dia não informado",
+    );
+    const feiraHorario = obter_horario_funcionamento(properties) || "Não informado";
+    const feiraEndereco = obterValorPropriedade(
+      properties,
+      "tx_endereco_equipamento",
+      "Sem endereço.",
+    );
+    const feiraQuantidade = obterValorPropriedade(
+      properties,
+      "qt_equipamento",
+      "Não informada",
+    );
 
     const descricao = `
-              <strong>Dia da semana:</strong> ${escaparHtml(obterValorPropriedade(properties, "tx_dia_funcionamento", "Não informado"))}<br>
-              <strong>Horário:</strong> ${escaparHtml(obter_horario_funcionamento(properties) || "Não informado")}<br>
-              <strong>Endereço:</strong> ${escaparHtml(obterValorPropriedade(properties, "tx_endereco_equipamento", "Sem endereço."))}<br>
-              <strong>Quantidade de barracas:</strong> ${escaparHtml(obterValorPropriedade(properties, "qt_equipamento", "Não informada"))}<br><br>
+              <strong>Dia da semana:</strong> ${escaparHtml(feiraDia)}<br>
+              <strong>Horário:</strong> ${escaparHtml(feiraHorario)}<br>
+              <strong>Endereço:</strong> ${escaparHtml(feiraEndereco)}<br>
+              <strong>Quantidade de barracas:</strong> ${escaparHtml(feiraQuantidade)}<br><br>
               <strong>Trajeto a pé:</strong> <span id="distance-val">Calculando...</span><br><br>
               <a id="google-maps-link" target="_blank">Abrir rota no Google Maps ↗</a>
-              <a id="share-link-feira" href="${SHARE_LINK_PLACEHOLDER}" target="_blank" title="Compartilhar feira livre">
-              <img src="${SHARE_IMAGE_PATH}" alt="Compartilhar feira livre" style="width: 20px; height: 20px; vertical-align: middle; margin-left: 35px;">
+              <br><br><strong>Compartilhar:</strong><br>
+              <a id="share-whatsapp-link" class="share-option share-option-whatsapp" target="_blank" rel="noopener noreferrer">
+                <svg class="share-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                  <path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.6-1.2A9 9 0 1 0 12 3Z" />
+                  <path d="M9 8.5c.3-.5 1-.7 1.4-.4l1.3 1.6c.3.4.2.9-.2 1.2l-.7.5c.6 1.2 1.5 2.1 2.7 2.7l.5-.7c.3-.4.8-.5 1.2-.2l1.6 1.3c.4.3.3 1-.1 1.4-.6.7-1.5 1-2.4.8-3.1-.7-6.1-3.7-6.8-6.8-.2-.9.1-1.8.8-2.4Z" />
+                </svg>
+                WhatsApp ↗
+              </a>
+              <a id="share-email-link" class="share-option" target="_blank" rel="noopener noreferrer">
+                <svg class="share-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="m4 7 8 6 8-6" />
+                </svg>
+                E-mail
               </a>
           `;
 
@@ -573,6 +637,14 @@ function setupInteractions() {
 
     const distanceSpan = document.getElementById("distance-val");
     const gMapsLink = document.getElementById("google-maps-link");
+    configurarLinksCompartilhamento({
+      titulo,
+      dia: feiraDia,
+      horario: feiraHorario,
+      endereco: feiraEndereco,
+      quantidade: feiraQuantidade,
+      coordenadas: targetCoords,
+    });
 
     if (map.getSource("route-line")) {
       map.getSource("route-line").setData({ type: "FeatureCollection", features: [] });
