@@ -1,4 +1,4 @@
-# Scripts do projeto feira livre sampa
+# Scripts do projeto feira livre Santo André 
 
 Essa pasta contém os scripts Python utilizados pelo projeto.
 

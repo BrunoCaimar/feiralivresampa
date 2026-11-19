@@ -14,7 +14,7 @@ em outra cidade. Para adaptar os dados e a interface:
    de dias, horários ou categorias, adapte também os filtros e os detalhes da
    feira.
 3. **Atualize a visualização do mapa:** altere o centro inicial do mapa,
-   atualmente configurado para São Paulo em `web/feira_livre.js`, e revise as
+   atualmente configurado para Santo André em `web/feira_livre.js`, e revise as
    cores/ícones e os filtros de dias em `web/index.html`,
    `web/styles.css` e `web/feira_livre.js`.
 4. **Revise textos e atribuições:** atualize título, descrição, diálogo

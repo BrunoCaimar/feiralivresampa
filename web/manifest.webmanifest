@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "Feira Livre São Paulo",
-  "short_name": "Feira Livre Sampa",
-  "description": "Encontre feiras livres na cidade de São Paulo.",
+  "name": "Feira Livre Santo André",
+  "short_name": "Feira Livre Santo André ",
+  "description": "Encontre feiras livres na cidade de Santo André.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

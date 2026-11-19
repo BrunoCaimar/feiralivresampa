@@ -1,6 +1,6 @@
 # QR code da aplicação
 
-Escaneie o QR code para abrir a aplicação Feira Livre Sampa:
+Escaneie o QR code para abrir a aplicação Feira Livre Santo André :
 
 ![QR code para https://brunocaimar.github.io/feiralivresampa/](qrcode-github-pages.png)
 

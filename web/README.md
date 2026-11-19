@@ -1,6 +1,6 @@
-# Aplicação web Feira Livre Sampa
+# Aplicação web Feira Livre Santo André 
 
-Aplicação web que exibe feiras livres da cidade de São Paulo em um mapa. É possível filtrar as feiras por dia da semana, consultar e compartilhar detalhes de cada feira, usar a localização do navegador e visualizar uma sugestão de trajeto a pé.
+Aplicação web que exibe feiras livres da cidade de Santo André em um mapa. É possível filtrar as feiras por dia da semana, consultar e compartilhar detalhes de cada feira, usar a localização do navegador e visualizar uma sugestão de trajeto a pé.
 
 A aplicação pode ser instalada como um app em navegadores compatíveis. Essa
 instalação não inclui suporte offline; o mapa e os serviços externos exigem
@@ -13,7 +13,7 @@ conexão com a internet.
 - `styles.css`: estilos da interface.
 - `feira_livre.js`: código JavaScript da aplicação.
 - `data/equipamento_feira_livre.geojson`: dados das feiras exibidos no mapa.
-- `data/municipio_sao_paulo.geojson`: polígono do município de São Paulo,
+- `data/municipio_sao_paulo.geojson`: polígono do município de Santo André,
   obtido da [API de malhas municipais do IBGE](https://servicodados.ibge.gov.br/api/v3/malhas/municipios/3550308?formato=application%2Fvnd.geo%2Bjson&qualidade=maxima&projecao=4674)
   (código 3550308).
 - `images/`: imagens usadas pela aplicação.
@@ -35,7 +35,7 @@ Os dados GeoJSON são obtidos pelo script em `scripts/` e copiados para `web/dat
 - **WhatsApp e e-mail:** compartilhamento dos dados da feira selecionada, incluindo um link do Google Maps com sua localização.
 - **ESLint e Prettier:** análise estática e formatação dos arquivos do frontend.
 
-Os ícones de instalação combinam o contorno do município de São Paulo,
+Os ícones de instalação combinam o contorno do município de Santo André,
 baseado na malha territorial do
 [IBGE](https://servicodados.ibge.gov.br/api/v3/malhas/municipios/3550308?formato=application%2Fvnd.geo%2Bjson&qualidade=maxima&projecao=4674),
 com a barraca da feira. A composição e os arquivos dos ícones foram gerados

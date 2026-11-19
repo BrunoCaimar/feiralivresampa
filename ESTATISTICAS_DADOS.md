@@ -8,7 +8,7 @@ recalculados quando ele for atualizado.
 ## Referência
 
 - **Fonte:** [GeoSampa](https://novogeosampa.prefeitura.sp.gov.br/), Prefeitura
-  de São Paulo.
+  de Santo André.
 - **Data dos dados no GeoJSON:** 5 de novembro de 2026, às 12:55 UTC
   (09:55 no horário de Brasília).
 - **Sistema de coordenadas:** WGS 84 (EPSG:4326).

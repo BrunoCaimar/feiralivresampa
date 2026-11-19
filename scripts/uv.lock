@@ -111,7 +111,7 @@ wheels = [
 ]
 
 [[package]]
-name = "feira-livre-sampa"
+name = "feira-livre-Santo André "
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

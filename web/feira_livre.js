@@ -17,7 +17,8 @@ const APP_URL = "https://brunocaimar.github.io/feiralivresampa/";
 const GEOJSON_MUNICIPIO_URL = "data/municipio_sao_paulo.geojson";
 const GEOJSON_FEIRA_LIVRE_URL = "data/equipamento_feira_livre.geojson";
 const SVG_NAMESPACE_URL = "http://www.w3.org/2000/svg";
-const SAO_PAULO_CENTER = [-46.6333, -23.5505];
+// const SAO_PAULO_CENTER = [-46.6333, -23.5505];
+const CITY_CENTER = [-46.530681, -23.657265 ]; // Santo André center
 const TOLERANCIA_LOCALIZACAO_KILOMETROS = 3;
 
 let userLocation = null;
@@ -28,7 +29,7 @@ let routeRequestController = null;
 const map = new maplibregl.Map({
   container: "map",
   style: MAPTILER_STYLE_URL,
-  center: SAO_PAULO_CENTER,
+  center: CITY_CENTER,
   zoom: 11,
   attributionControl: false,
 });
@@ -258,7 +259,7 @@ map.on("load", async () => {
 
       "icon-image": [
         "match",
-        ["get", "tx_dia_funcionamento"],
+        ["get", dia_funcionamento_feira],
         "DOMINGO",
         "icon-red",
         "SABADO",
@@ -277,7 +278,7 @@ map.on("load", async () => {
       "icon-allow-overlap": true,
       "icon-anchor": "bottom",
 
-      "text-field": "{tx_dia_funcionamento} - {nm_equipamento}",
+      "text-field": "{"+dia_funcionamento_feira+"} - {"+nome_feira+"}",
       "text-size": 12,
       "text-offset": [0, 0.5],
       "text-anchor": "top",
@@ -324,10 +325,10 @@ function startGeolocation() {
       userLocation = null;
       localizacaoForaMunicipio = true;
       showModal(
-        "⚠️ Atenção: Fora do limite do município de São Paulo",
-        "Sua localização está fora da área do município de São Paulo. O mapa será carregado no centro do município e você poderá visualizar as feiras livres.",
+        "⚠️ Atenção: Fora do limite do município de Santo André",
+        "Sua localização está fora da área do município de Santo André. O mapa será carregado no centro do município e você poderá visualizar as feiras livres.",
       );
-      map.easeTo({ center: SAO_PAULO_CENTER, zoom: 11 });
+      map.easeTo({ center: CITY_CENTER, zoom: 11 });
       return;
     }
 
@@ -347,13 +348,12 @@ function showModal(titulo, descricao) {
 function obterFeatureSelecionada(item) {
   const feature = item.features?.[0];
   const coordinates = feature?.geometry?.coordinates;
+  
+  console.log("Selected feature:", feature, "Coordinates:", coordinates);
+
 
   if (
-    !feature ||
-    !Array.isArray(coordinates) ||
-    coordinates.length < 2 ||
-    !Number.isFinite(coordinates[0]) ||
-    !Number.isFinite(coordinates[1])
+    !feature 
   ) {
     return null;
   }
@@ -398,7 +398,7 @@ function configurarLinksCompartilhamento({
     `${coordenadas[1]},${coordenadas[0]}`,
   );
   const shareMessage = [
-    `Veja os dados desta feira livre em São Paulo!`,
+    `Veja os dados desta feira livre em Santo André!`,
     ``,
     `⛺️Feira livre: ${titulo}`,
     `🗓️ Dia da semana: ${dia}`,
@@ -410,12 +410,17 @@ function configurarLinksCompartilhamento({
     ``,
     `------------------------------`,
     ``,
-    `Compartilhado via ⛺️ Feira Livre Sampa: ${APP_URL}`,
+    `Compartilhado via ⛺️ Feira Livre Santo André : ${APP_URL}`,
   ].join("\n");
 
   shareWhatsAppLink.href = `https://wa.me/?text=${encodeURIComponent(shareMessage)}`;
   shareEmailLink.href = `mailto:?subject=${encodeURIComponent(`Feira livre: ${titulo}`)}&body=${encodeURIComponent(shareMessage)}`;
 }
+
+const nome_feira = "DSC_LOGRADOURO";
+const dia_funcionamento_feira = "DSC_DIA";
+const endereco_feira = "DSC_LOGRADOURO";
+const quantidade_barracas_feira = "QTD_BARRACAS";
 
 function setupInteractions() {
   const menuButton = document.getElementById("menu-button");
@@ -516,11 +521,11 @@ function setupInteractions() {
         : "Selecionar todos";
 
     if (checkedDays.length === 0) {
-      map.setFilter("feira-livre-layer", ["==", "tx_dia_funcionamento", "NONE"]);
+      map.setFilter("feira-livre-layer", ["==", dia_funcionamento_feira, "NONE"]);
     } else {
       map.setFilter("feira-livre-layer", [
         "match",
-        ["get", "tx_dia_funcionamento"],
+        ["get", dia_funcionamento_feira],
         checkedDays,
         true,
         false,
@@ -560,6 +565,8 @@ function setupInteractions() {
 
   function obter_horario_funcionamento(properties) {
     const categoria = properties.cd_tipo_categoria;
+    console.log("Categoria da feira:", categoria, properties);
+    return properties.DSC_HORARIO + " - " + properties.DSC_PERIODO;
     if (typeof categoria !== "string" || categoria.trim() === "") return null;
 
     if (categoria === "T") {
@@ -591,21 +598,21 @@ function setupInteractions() {
     routeRequestController?.abort();
     routeRequestController = null;
 
-    const titulo = obterValorPropriedade(properties, "nm_equipamento", "Feira livre");
+    const titulo = obterValorPropriedade(properties, nome_feira, "Feira livre");
     const feiraDia = obterValorPropriedade(
       properties,
-      "tx_dia_funcionamento",
+      dia_funcionamento_feira,
       "Dia não informado",
     );
     const feiraHorario = obter_horario_funcionamento(properties) || "Não informado";
     const feiraEndereco = obterValorPropriedade(
       properties,
-      "tx_endereco_equipamento",
+      endereco_feira,
       "Sem endereço.",
     );
     const feiraQuantidade = obterValorPropriedade(
       properties,
-      "qt_equipamento",
+      quantidade_barracas_feira,
       "Não informada",
     );
 
@@ -724,7 +731,7 @@ function setupInteractions() {
       }
     } else {
       distanceSpan.textContent = localizacaoForaMunicipio
-        ? "Sua localização está fora do município de São Paulo."
+        ? "Sua localização está fora do município de Santo André."
         : "Ative sua localização para calcular.";
       distanceSpan.style.color = "#555";
       const googleMapsUrl = new URL(GOOGLE_MAPS_URL);
@@ -756,9 +763,9 @@ function setupInteractions() {
         ? feature.properties
         : {};
     const endereco = escaparHtml(
-      obterValorPropriedade(properties, "tx_endereco_equipamento", "Sem endereço."),
+      obterValorPropriedade(properties, endereco_feira, "Sem endereço."),
     ).replaceAll(" ", "&nbsp;");
-    const title = `<strong>${escaparHtml(obterValorPropriedade(properties, "tx_dia_funcionamento", "Dia não informado"))} - ${escaparHtml(obterValorPropriedade(properties, "nm_equipamento", "Feira livre"))}</strong><br>${endereco}<br>Barracas: ${escaparHtml(obterValorPropriedade(properties, "qt_equipamento", "Não informada"))}`;
+    const title = `<strong>${escaparHtml(obterValorPropriedade(properties, dia_funcionamento_feira, "Dia não informado"))} - ${escaparHtml(obterValorPropriedade(properties, nome_feira, "Feira livre"))}</strong><br>${endereco}<br>Barracas: ${escaparHtml(obterValorPropriedade(properties, quantidade_barracas_feira, "Não informada"))}`;
     while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
       coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
     }

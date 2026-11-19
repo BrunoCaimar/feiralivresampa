@@ -1,6 +1,6 @@
-# Feira Livre Sampa
+# Feira Livre Santo André 
 
-Aplicação web para visualizar a localização das feiras livres na cidade de São Paulo.
+Aplicação web para visualizar a localização das feiras livres na cidade de Santo André.
 
 ## Funcionalidades
 
@@ -124,7 +124,7 @@ e condições de licença dos dados descritas abaixo.
 ## Dados e licenças
 
 Os dados das feiras livres são obtidos do portal de dados abertos da Prefeitura
-do Município de São Paulo, por meio do
+do Município de Santo André, por meio do
 [GeoSampa](https://metadados.geosampa.prefeitura.sp.gov.br/geonetwork/srv/por/catalog.search#/metadata/bd6e68ad-aba4-4841-af4d-e1c6dfc1057f),
 e estão licenciados sob
 [Creative Commons Atribuição-CompartilhaIgual 4.0 Internacional (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/).

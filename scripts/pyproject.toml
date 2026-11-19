@@ -1,7 +1,7 @@
 [project]
-name = "feira-livre-sampa"
+name = "feira-livre-Santo André "
 version = "0.1.0"
-description = "Scripts do projeto feira livre sampa"
+description = "Scripts do projeto feira livre Santo André "
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
